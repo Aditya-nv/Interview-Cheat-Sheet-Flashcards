@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>.NET & Azure Interview Cheat Sheet Flashcards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>.NET, React &amp; Azure Interview Cheat Sheet Flashcards</title>
 
     <link
       href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css"
@@ -71,6 +73,7 @@
         font-size: 14px;
         border-radius: 8px;
         cursor: pointer;
+        -webkit-user-select: none;
         user-select: none;
       }
 
@@ -99,6 +102,7 @@
         font-weight: bold;
         font-size: 16px;
         border-radius: 10px 10px 0 0;
+        -webkit-user-select: none;
         user-select: none;
       }
 
@@ -193,6 +197,12 @@
           transform: translateY(0);
         }
       }
+
+      .move-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
     </style>
 
     <script>
@@ -258,7 +268,7 @@
   </head>
 
   <body>
-    <h1>.NET & Azure Interview Cheat Sheet Flashcards</h1>
+    <h1>.NET, React &amp; Azure Interview Cheat Sheet Flashcards</h1>
 
     <div class="toggle-btn">
       <button id="toggleDark" aria-pressed="false">🌙 Toggle Dark Mode</button>
@@ -526,7 +536,7 @@ HAVING COUNT(*) > 100;
 
     <button
       onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-      style="position: fixed; bottom: 20px; right: 20px"
+      class="move-to-top"
     >
       ⬆️ Top
     </button>
