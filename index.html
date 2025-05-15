@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>.NET & Azure Interview Cheat Sheet Flashcards</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+
+    <style>
+      :root {
+        --bg-light: #f9f9f9;
+        --bg-dark: #1e1e1e;
+        --text-light: #333;
+        --text-dark: #f1f1f1;
+        --card-light: #ffffff;
+        --card-dark: #2c2c2c;
+        --border-light: #ccc;
+        --border-dark: #444;
+        --highlight: #2e6da4;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 2rem;
+        padding: 20px;
+        background-color: var(--bg-light);
+        color: var(--text-light);
+        transition: all 0.3s ease-in-out;
+      }
+
+      body.dark {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
+
+      h1 {
+        text-align: center;
+        color: var(--highlight);
+        margin-bottom: 2rem;
+      }
+
+      .toggle-btn {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 2rem;
+      }
+
+      button {
+        background-color: var(--highlight);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      button:focus {
+        outline: 2px solid #58a6ff;
+        outline-offset: 2px;
+      }
+
+      .card {
+        background: var(--card-light);
+        border: 1px solid var(--border-light);
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: background 0.3s, color 0.3s, border 0.3s;
+      }
+
+      body.dark .card {
+        background: var(--card-dark);
+        border: 1px solid var(--border-dark);
+      }
+
+      summary {
+        cursor: pointer;
+        padding: 15px 20px;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 10px 10px 0 0;
+        user-select: none;
+      }
+
+      details[open] summary {
+        background-color: #ced4da;
+      }
+
+      body.dark details[open] summary {
+        background-color: #3a3f44;
+      }
+
+      .answer {
+        padding: 20px;
+        border-top: 1px solid #ccc;
+        white-space: pre-wrap;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      pre {
+        padding: 16px;
+        overflow-x: auto;
+        border-radius: 8px;
+        margin-top: 1rem;
+      }
+
+      code {
+        font-family: Consolas, monospace;
+        font-size: 13px;
+      }
+
+      /* Print-friendly */
+      @media print {
+        button,
+        .toggle-btn,
+        .toc {
+          display: none !important;
+        }
+
+        body {
+          background-color: white !important;
+          color: black !important;
+        }
+
+        .card {
+          page-break-inside: avoid;
+          background: white !important;
+          border: 1px solid #ccc;
+        }
+      }
+
+      .toc {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--card-light);
+        border: 1px solid var(--border-light);
+        padding: 10px 15px;
+        border-radius: 8px;
+        max-width: 200px;
+        z-index: 10;
+      }
+
+      .toc a {
+        text-decoration: none;
+        color: var(--highlight);
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+
+      body.dark .toc {
+        background: var(--card-dark);
+        border-color: var(--border-dark);
+      }
+
+      body.dark .toc a {
+        color: #58a6ff;
+      }
+
+      details[open] .answer {
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+
+    <script>
+      let suppressAutoCollapse = false;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const detailsList = document.querySelectorAll("details");
+
+        detailsList.forEach((detail) => {
+          detail.addEventListener("toggle", () => {
+            if (suppressAutoCollapse) return;
+            if (detail.open) {
+              detailsList.forEach((d) => {
+                if (d !== detail) d.removeAttribute("open");
+              });
+            }
+          });
+        });
+
+        const darkToggle = document.getElementById("toggleDark");
+        darkToggle.setAttribute("aria-pressed", "false");
+        darkToggle.addEventListener("click", () => {
+          document.body.classList.toggle("dark");
+          const isDark = document.body.classList.contains("dark");
+          darkToggle.setAttribute("aria-pressed", isDark.toString());
+        });
+
+        const tocLinks = document.querySelectorAll(".toc a");
+        tocLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const targetId = link.getAttribute("href").substring(1);
+            const targetEl = document.getElementById(targetId);
+            if (targetEl && targetEl.tagName === "DETAILS") {
+              e.preventDefault();
+              suppressAutoCollapse = true;
+
+              document.querySelectorAll("details").forEach((d) => {
+                if (d !== targetEl) d.removeAttribute("open");
+              });
+              targetEl.setAttribute("open", true);
+              targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              setTimeout(() => (suppressAutoCollapse = false), 300);
+              history.pushState(null, "", `#${targetId}`);
+            }
+          });
+        });
+      });
+
+      function expandAll() {
+        suppressAutoCollapse = true;
+        document
+          .querySelectorAll("details")
+          .forEach((d) => d.setAttribute("open", true));
+        setTimeout(() => (suppressAutoCollapse = false), 300);
+      }
+
+      function collapseAll() {
+        document
+          .querySelectorAll("details")
+          .forEach((d) => d.removeAttribute("open"));
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>.NET & Azure Interview Cheat Sheet Flashcards</h1>
+
+    <div class="toggle-btn">
+      <button id="toggleDark" aria-pressed="false">🌙 Toggle Dark Mode</button>
+      <button onclick="expandAll()" aria-label="Expand all flashcards">
+        Expand All
+      </button>
+      <button onclick="collapseAll()" aria-label="Collapse all flashcards">
+        Collapse All
+      </button>
+    </div>
+
+    <div class="toc" role="navigation" aria-label="Table of Contents">
+      <strong>Quick Links</strong>
+      <a href="#intro">Introduction</a>
+      <a href="#net">.NET Differences</a>
+      <a href="#blob-trigger">Blob Trigger</a>
+      <a href="#azure-function">Azure Function vs API</a>
+      <a href="#redis">Redis Caching</a>
+      <a href="#react">React Example</a>
+      <a href="#prod-issue">Prod Issue</a>
+      <a href="#auth">Auth & JWT</a>
+      <a href="#middleware">Middleware</a>
+      <a href="#distinct">SQL DISTINCT</a>
+      <a href="#sp-func">SP vs Function</a>
+      <a href="#having">HAVING vs WHERE</a>
+    </div>
+
+    <!-- Flashcards Begin -->
+    <details class="card" id="intro">
+      <summary>Personal Introduction</summary>
+      <div class="answer">
+        Hello, my name is Aditya Sancheti. I'm a Senior Full Stack Web Developer
+        at NewVision Software.. I specialize in .NET Core, Node.js, Angular, and
+        Azure services. I've led the development of enterprise-level features
+        like audit creation, file sharing with Azure Blob, and real-time chat
+        applications. I'm passionate about clean architecture, automation, and
+        building scalable, cloud-native solutions.
+      </div>
+    </details>
+
+    <details class="card" id="net">
+      <summary>.NET Differences</summary>
+      <div class="answer">
+        <strong>.NET Framework:</strong> Windows-only, legacy apps like
+        WinForms/WPF.
+
+        <strong>.NET Core:</strong> Cross-platform, modern APIs, microservices.
+
+        <strong>.NET (5+):</strong> Unified and cross-platform.
+
+        <strong>.NET Standard:</strong> Spec for code sharing; deprecated after
+        .NET 5.
+      </div>
+    </details>
+
+    <details class="card" id="blob-trigger">
+      <summary>Azure Blob Trigger Example</summary>
+      <div class="answer">
+        <strong>Scenario:</strong> Image uploaded to Blob Storage triggers a
+        Function to resize it.<br />
+        <strong>Use Cases:</strong> Image processing, virus scan, parsing.
+      </div>
+    </details>
+
+    <details class="card">
+      <summary>Code: Azure Blob Trigger</summary>
+      <div class="answer">
+        <pre class="line-numbers"><code class="language-csharp">
+[FunctionName("ResizeImageFunction")]
+public void Run(
+    [BlobTrigger("input-container/{name}", Connection = "AzureWebJobsStorage")] Stream inputBlob,
+    string name,
+    ILogger log)
+{
+    log.LogInformation($"Processing blob: {name}, Size: {inputBlob.Length} bytes");
+    // Image processing logic
+}
+        </code></pre>
+      </div>
+    </details>
+
+    <details class="card" id="azure-function">
+      <summary>Why Azure Function Instead of API</summary>
+      <div class="answer">
+        Event-driven (Blob, Timer, etc.)<br />
+        Cost-effective (no idle cost)<br />
+        Auto-scalable <br />
+        Ideal for background tasks or workflows
+      </div>
+    </details>
+
+    <details class="card" id="redis">
+      <summary>Redis Caching</summary>
+      <div class="answer">
+        <strong>Advantages:</strong> Fast in-memory store, pub-sub, reduces DB
+        load, Azure-managed.<br />
+        <strong>Disadvantages:</strong> Costly for large data, volatile unless
+        persisted.<br />
+        <strong>Deployment:</strong> Server-side (not browser).
+      </div>
+    </details>
+
+    <details class="card" id="react">
+      <summary>React: Product List Using Hooks</summary>
+      <div class="answer">
+        Example: Fetching and rendering products using React Hooks.<br />
+        useEffect to fetch products from /api/products. useState to store and
+        render in list. Map products and render in &lt;ul&gt;.
+
+        <pre class="line-numbers"><code class="language-javascript">
+import React, { useEffect, useState } from 'react';
+
+const ProductList = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.error('Error fetching products:', err));
+  }, []);
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Product List&lt;/h2&gt;
+      &lt;ul&gt;
+        {products.map(product => (
+          &lt;li key={product.id}&gt;{product.name}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default ProductList;
+</code></pre>
+      </div>
+    </details>
+    <details class="card" id="prod-issue">
+      <summary>Solution to Production Issue: Data Not Saving</summary>
+      <div class="answer">
+        Identify cause:<br />
+        - Check logs, error stack<br />
+        - Network inspection <br />
+        - Server/DB health<br />
+        - Reproduce locally<br />
+        Fix:<br />
+        - Retry logic<br />
+        - Constraint validation<br />
+        - Use distributed tracing<br />
+        - Deploy patch<br />
+        - Verify fix in staging<br />
+        - Monitor
+      </div>
+    </details>
+
+    <details class="card" id="auth">
+      <summary>Authentication and JWT Storage</summary>
+      <div class="answer">
+        JWT contains claims in a JSON payload, signed by the server.<br />
+        Used for stateless authentication.<br />
+        Secure with HTTPS, validate signature, expiration, and audience.<br />
+        Store token securely on client.<br />
+        Recommended: HTTP-only cookies<br />
+        Alternatives: sessionStorage/localStorage (less secure)
+      </div>
+    </details>
+
+    <details class="card" id="middleware">
+      <summary>Middleware</summary>
+      <div class="answer">
+        Middleware allows injecting custom logic into the request pipeline.<br />
+        Custom logic in request pipeline. Used for: Auth, logging, CORS.<br />
+
+        Middleware intercepts requests/responses to add functionality like:<br />
+        - Logging<br />
+        - Authentication<br />
+        - Error handling<br />
+        - CORS
+
+        <pre class="line-numbers"><code class="language-csharp">
+public class LoggingMiddleware
+{
+    private readonly RequestDelegate _next;
+    public LoggingMiddleware(RequestDelegate next) => _next = next;
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        Console.WriteLine($"Path: {context.Request.Path}");
+        await _next(context);
+        Console.WriteLine($"Status: {context.Response.StatusCode}");
+    }
+}
+app.UseMiddleware&lt;LoggingMiddleware&gt;();
+        </code></pre>
+      </div>
+    </details>
+
+    <details class="card" id="distinct">
+      <summary>SQL DISTINCT</summary>
+      <div class="answer">
+        Used to get unique records.<br />
+        Example:<br />
+        SELECT DISTINCT country FROM customers;
+      </div>
+    </details>
+
+    <details class="card" id="sp-func">
+      <summary>Stored Procedure vs Function - SQL</summary>
+      <div class="answer">
+        SP:<br />
+        - Can modify data<br />
+        - Supports transactions<br />
+        - No return value needed<br />
+        - use with EXEC<br />
+        Function:<br />
+        - Returns value<br />
+        - Used in SELECT/WHERE statements
+
+        <pre class="line-numbers"><code class="language-sql">
+-- Stored Procedure
+CREATE PROCEDURE GetActiveEmployees
+AS
+BEGIN
+    SELECT * FROM Employees WHERE IsActive = 1;
+END;
+
+-- Function
+CREATE FUNCTION GetEmployeeName(@EmpId INT)
+RETURNS VARCHAR(100)
+AS
+BEGIN
+    DECLARE @Name VARCHAR(100);
+    SELECT @Name = Name FROM Employees WHERE Id = @EmpId;
+    RETURN @Name;
+END;
+
+-- Use
+SELECT dbo.GetEmployeeName(1);
+        </code></pre>
+      </div>
+    </details>
+
+    <details class="card" id="having">
+      <summary>HAVING vs WHERE</summary>
+      <div class="answer">
+        WHERE filters rows before grouping.<br />
+        HAVING filters groups after GROUP BY.<br />
+        Example:<br />
+        SELECT dept, COUNT(*) FROM employees GROUP BY dept HAVING COUNT(*) &gt;
+        5;
+        <pre class="line-numbers"><code class="language-sql">
+-- WHERE filters before GROUP BY
+SELECT * FROM Sales WHERE Region = 'West';
+
+-- HAVING filters after aggregation
+SELECT Region, COUNT(*) FROM Sales
+GROUP BY Region
+HAVING COUNT(*) > 100;
+        </code></pre>
+      </div>
+    </details>
+
+    <!-- Flashcards End -->
+
+    <button
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      style="position: fixed; bottom: 20px; right: 20px"
+    >
+      ⬆️ Top
+    </button>
+  </body>
+</html>
