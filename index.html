@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>.NET, React &amp; Azure Interview Cheat Sheet Flashcards</title>
+    <title>.NET, React & Azure Interview Cheat Sheet Flashcards</title>
+
+    <link rel="stylesheet" href="styles.css" />
 
     <link
       href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css"
@@ -14,261 +16,10 @@
       href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
-
-    <style>
-      :root {
-        --bg-light: #f9f9f9;
-        --bg-dark: #1e1e1e;
-        --text-light: #333;
-        --text-dark: #f1f1f1;
-        --card-light: #ffffff;
-        --card-dark: #2c2c2c;
-        --border-light: #ccc;
-        --border-dark: #444;
-        --highlight: #2e6da4;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        margin: 2rem;
-        padding: 20px;
-        background-color: var(--bg-light);
-        color: var(--text-light);
-        transition: all 0.3s ease-in-out;
-      }
-
-      body.dark {
-        background-color: var(--bg-dark);
-        color: var(--text-dark);
-      }
-
-      h1 {
-        text-align: center;
-        color: var(--highlight);
-        margin-bottom: 2rem;
-      }
-
-      .toggle-btn {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 2rem;
-      }
-
-      button {
-        background-color: var(--highlight);
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 14px;
-        border-radius: 8px;
-        cursor: pointer;
-        -webkit-user-select: none;
-        user-select: none;
-      }
-
-      button:focus {
-        outline: 2px solid #58a6ff;
-        outline-offset: 2px;
-      }
-
-      .card {
-        background: var(--card-light);
-        border: 1px solid var(--border-light);
-        border-radius: 10px;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        transition: background 0.3s, color 0.3s, border 0.3s;
-      }
-
-      body.dark .card {
-        background: var(--card-dark);
-        border: 1px solid var(--border-dark);
-      }
-
-      summary {
-        cursor: pointer;
-        padding: 15px 20px;
-        font-weight: bold;
-        font-size: 16px;
-        border-radius: 10px 10px 0 0;
-        -webkit-user-select: none;
-        user-select: none;
-      }
-
-      details[open] summary {
-        background-color: #ced4da;
-      }
-
-      body.dark details[open] summary {
-        background-color: #3a3f44;
-      }
-
-      .answer {
-        padding: 20px;
-        border-top: 1px solid #ccc;
-        white-space: pre-wrap;
-        font-size: 14px;
-        line-height: 1.5;
-      }
-
-      pre {
-        padding: 16px;
-        overflow-x: auto;
-        border-radius: 8px;
-        margin-top: 1rem;
-      }
-
-      code {
-        font-family: Consolas, monospace;
-        font-size: 13px;
-      }
-
-      /* Print-friendly */
-      @media print {
-        button,
-        .toggle-btn,
-        .toc {
-          display: none !important;
-        }
-
-        body {
-          background-color: white !important;
-          color: black !important;
-        }
-
-        .card {
-          page-break-inside: avoid;
-          background: white !important;
-          border: 1px solid #ccc;
-        }
-      }
-
-      .toc {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: var(--card-light);
-        border: 1px solid var(--border-light);
-        padding: 10px 15px;
-        border-radius: 8px;
-        max-width: 200px;
-        z-index: 10;
-      }
-
-      .toc a {
-        text-decoration: none;
-        color: var(--highlight);
-        display: block;
-        margin-bottom: 5px;
-        font-size: 14px;
-      }
-
-      body.dark .toc {
-        background: var(--card-dark);
-        border-color: var(--border-dark);
-      }
-
-      body.dark .toc a {
-        color: #58a6ff;
-      }
-
-      details[open] .answer {
-        animation: fadeIn 0.3s ease-in;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-4px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .move-to-top {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-      }
-    </style>
-
-    <script>
-      let suppressAutoCollapse = false;
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const detailsList = document.querySelectorAll("details");
-
-        detailsList.forEach((detail) => {
-          detail.addEventListener("toggle", () => {
-            if (suppressAutoCollapse) return;
-            if (detail.open) {
-              detailsList.forEach((d) => {
-                if (d !== detail) d.removeAttribute("open");
-              });
-            }
-          });
-        });
-
-        const darkToggle = document.getElementById("toggleDark");
-        darkToggle.setAttribute("aria-pressed", "false");
-        darkToggle.addEventListener("click", () => {
-          document.body.classList.toggle("dark");
-          const isDark = document.body.classList.contains("dark");
-          darkToggle.setAttribute("aria-pressed", isDark.toString());
-        });
-
-        const tocLinks = document.querySelectorAll(".toc a");
-        tocLinks.forEach((link) => {
-          link.addEventListener("click", (e) => {
-            const targetId = link.getAttribute("href").substring(1);
-            const targetEl = document.getElementById(targetId);
-            if (targetEl && targetEl.tagName === "DETAILS") {
-              e.preventDefault();
-              suppressAutoCollapse = true;
-
-              document.querySelectorAll("details").forEach((d) => {
-                if (d !== targetEl) d.removeAttribute("open");
-              });
-              targetEl.setAttribute("open", true);
-              targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
-              setTimeout(() => (suppressAutoCollapse = false), 300);
-              history.pushState(null, "", `#${targetId}`);
-            }
-          });
-        });
-      });
-
-      function expandAll() {
-        suppressAutoCollapse = true;
-        document
-          .querySelectorAll("details")
-          .forEach((d) => d.setAttribute("open", true));
-        setTimeout(() => (suppressAutoCollapse = false), 300);
-      }
-
-      function collapseAll() {
-        document
-          .querySelectorAll("details")
-          .forEach((d) => d.removeAttribute("open"));
-      }
-    </script>
   </head>
 
   <body>
-    <h1>.NET, React &amp; Azure Interview Cheat Sheet Flashcards</h1>
+    <h1>.NET, React & Azure Interview Cheat Sheet Flashcards</h1>
 
     <div class="toggle-btn">
       <button id="toggleDark" aria-pressed="false">🌙 Toggle Dark Mode</button>
@@ -280,63 +31,112 @@
       </button>
     </div>
 
-    <div class="toc" role="navigation" aria-label="Table of Contents">
-      <strong>Quick Links</strong>
-      <a href="#intro">Introduction</a>
-      <a href="#net">.NET Differences</a>
-      <a href="#blob-trigger">Blob Trigger</a>
-      <a href="#azure-function">Azure Function vs API</a>
-      <a href="#redis">Redis Caching</a>
-      <a href="#react">React Example</a>
-      <a href="#prod-issue">Prod Issue</a>
-      <a href="#auth">Auth & JWT</a>
-      <a href="#middleware">Middleware</a>
-      <a href="#distinct">SQL DISTINCT</a>
-      <a href="#sp-func">SP vs Function</a>
-      <a href="#having">HAVING vs WHERE</a>
+    <div class="tab-buttons" role="tablist">
+      <button
+        onclick="showTab('day1')"
+        id="tab-day1"
+        class="active"
+        role="tab"
+        aria-label="View Day 1 Topics"
+      >
+        Day 1
+      </button>
+      <button
+        onclick="showTab('day2')"
+        id="tab-day2"
+        role="tab"
+        aria-label="View Day 2 Topics"
+      >
+        Day 2
+      </button>
+      <button
+        onclick="showTab('day3')"
+        id="tab-day3"
+        class="active"
+        role="tab"
+        aria-label="View Day 3 Topics"
+      >
+        Day 3
+      </button>
+      <button
+        onclick="showTab('day4')"
+        id="tab-day4"
+        class="active"
+        role="tab"
+        aria-label="View Day 4 Topics"
+      >
+        Day 4
+      </button>
+      <button
+        onclick="showTab('day5')"
+        id="tab-day5"
+        class="active"
+        role="tab"
+        aria-label="View Day 5 Topics"
+      >
+        Day 5
+      </button>
     </div>
 
-    <!-- Flashcards Begin -->
-    <details class="card" id="intro">
-      <summary>Personal Introduction</summary>
-      <div class="answer">
-        Hello, my name is Aditya Sancheti. I'm a Senior Full Stack Web Developer
-        at NewVision Software.. I specialize in .NET Core, Node.js, Angular, and
-        Azure services. I've led the development of enterprise-level features
-        like audit creation, file sharing with Azure Blob, and real-time chat
-        applications. I'm passionate about clean architecture, automation, and
-        building scalable, cloud-native solutions.
+    <div id="day1" class="tab-content" role="tabpanel">
+      <div class="toc" role="navigation" aria-label="Table of Contents">
+        <strong>Quick Links</strong>
+        <a href="#intro">Introduction</a>
+        <a href="#net">.NET Differences</a>
+        <a href="#blob-trigger">Blob Trigger</a>
+        <a href="#azure-function">Azure Function vs API</a>
+        <a href="#redis">Redis Caching</a>
+        <a href="#react">React Example</a>
+        <a href="#prod-issue">Prod Issue</a>
+        <a href="#auth">Auth & JWT</a>
+        <a href="#middleware">Middleware</a>
+        <a href="#distinct">SQL DISTINCT</a>
+        <a href="#sp-func">SP vs Function</a>
+        <a href="#having">HAVING vs WHERE</a>
       </div>
-    </details>
 
-    <details class="card" id="net">
-      <summary>.NET Differences</summary>
-      <div class="answer">
-        <strong>.NET Framework:</strong> Windows-only, legacy apps like
-        WinForms/WPF.
+      <details class="card" id="intro">
+        <summary>Personal Introduction</summary>
+        <div class="answer">
+          Hello, my name is Aditya Sancheti. I'm a Senior Full Stack Web
+          Developer at NewVision Software.. I specialize in .NET Core, Node.js,
+          Angular, and Azure services. I've led the development of
+          enterprise-level features like audit creation, file sharing with Azure
+          Blob, and real-time chat applications. I'm passionate about clean
+          architecture, automation, and building scalable, cloud-native
+          solutions.
+        </div>
+      </details>
 
-        <strong>.NET Core:</strong> Cross-platform, modern APIs, microservices.
+      <details class="card" id="net">
+        <summary>.NET Differences</summary>
+        <div class="answer">
+          <strong>.NET Framework:</strong> Windows-only, legacy apps like
+          WinForms/WPF.
 
-        <strong>.NET (5+):</strong> Unified and cross-platform.
+          <strong>.NET Core:</strong> Cross-platform, modern APIs,
+          microservices.
 
-        <strong>.NET Standard:</strong> Spec for code sharing; deprecated after
-        .NET 5.
-      </div>
-    </details>
+          <strong>.NET (5+):</strong> Unified and cross-platform.
 
-    <details class="card" id="blob-trigger">
-      <summary>Azure Blob Trigger Example</summary>
-      <div class="answer">
-        <strong>Scenario:</strong> Image uploaded to Blob Storage triggers a
-        Function to resize it.<br />
-        <strong>Use Cases:</strong> Image processing, virus scan, parsing.
-      </div>
-    </details>
+          <strong>.NET Standard:</strong> Spec for code sharing; deprecated
+          after .NET 5.
+        </div>
+      </details>
 
-    <details class="card">
-      <summary>Code: Azure Blob Trigger</summary>
-      <div class="answer">
-        <pre class="line-numbers"><code class="language-csharp">
+      <details class="card" id="blob-trigger">
+        <summary>Azure Blob Trigger Example</summary>
+        <div class="answer">
+          <strong>Scenario:</strong> Image uploaded to Blob Storage triggers a
+          Function to resize it.<br />
+          <strong>Use Cases:</strong> Image processing, virus scan, parsing.
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>Code: Azure Blob Trigger</summary>
+        <div class="answer">
+          <pre class="line-numbers"><code class="language-csharp">
 [FunctionName("ResizeImageFunction")]
 public void Run(
     [BlobTrigger("input-container/{name}", Connection = "AzureWebJobsStorage")] Stream inputBlob,
@@ -347,38 +147,38 @@ public void Run(
     // Image processing logic
 }
         </code></pre>
-      </div>
-    </details>
+        </div>
+      </details>
 
-    <details class="card" id="azure-function">
-      <summary>Why Azure Function Instead of API</summary>
-      <div class="answer">
-        Event-driven (Blob, Timer, etc.)<br />
-        Cost-effective (no idle cost)<br />
-        Auto-scalable <br />
-        Ideal for background tasks or workflows
-      </div>
-    </details>
+      <details class="card" id="azure-function">
+        <summary>Why Azure Function Instead of API</summary>
+        <div class="answer">
+          Event-driven (Blob, Timer, etc.)<br />
+          Cost-effective (no idle cost)<br />
+          Auto-scalable <br />
+          Ideal for background tasks or workflows
+        </div>
+      </details>
 
-    <details class="card" id="redis">
-      <summary>Redis Caching</summary>
-      <div class="answer">
-        <strong>Advantages:</strong> Fast in-memory store, pub-sub, reduces DB
-        load, Azure-managed.<br />
-        <strong>Disadvantages:</strong> Costly for large data, volatile unless
-        persisted.<br />
-        <strong>Deployment:</strong> Server-side (not browser).
-      </div>
-    </details>
+      <details class="card" id="redis">
+        <summary>Redis Caching</summary>
+        <div class="answer">
+          <strong>Advantages:</strong> Fast in-memory store, pub-sub, reduces DB
+          load, Azure-managed.<br />
+          <strong>Disadvantages:</strong> Costly for large data, volatile unless
+          persisted.<br />
+          <strong>Deployment:</strong> Server-side (not browser).
+        </div>
+      </details>
 
-    <details class="card" id="react">
-      <summary>React: Product List Using Hooks</summary>
-      <div class="answer">
-        Example: Fetching and rendering products using React Hooks.<br />
-        useEffect to fetch products from /api/products. useState to store and
-        render in list. Map products and render in &lt;ul&gt;.
+      <details class="card" id="react">
+        <summary>React: Product List Using Hooks</summary>
+        <div class="answer">
+          Example: Fetching and rendering products using React Hooks.<br />
+          useEffect to fetch products from /api/products. useState to store and
+          render in list. Map products and render in &lt;ul&gt;.
 
-        <pre class="line-numbers"><code class="language-javascript">
+          <pre class="line-numbers"><code class="language-javascript">
 import React, { useEffect, useState } from 'react';
 
 const ProductList = () => {
@@ -405,51 +205,51 @@ const ProductList = () => {
 
 export default ProductList;
 </code></pre>
-      </div>
-    </details>
-    <details class="card" id="prod-issue">
-      <summary>Solution to Production Issue: Data Not Saving</summary>
-      <div class="answer">
-        Identify cause:<br />
-        - Check logs, error stack<br />
-        - Network inspection <br />
-        - Server/DB health<br />
-        - Reproduce locally<br />
-        Fix:<br />
-        - Retry logic<br />
-        - Constraint validation<br />
-        - Use distributed tracing<br />
-        - Deploy patch<br />
-        - Verify fix in staging<br />
-        - Monitor
-      </div>
-    </details>
+        </div>
+      </details>
+      <details class="card" id="prod-issue">
+        <summary>Solution to Production Issue: Data Not Saving</summary>
+        <div class="answer">
+          Identify cause:<br />
+          - Check logs, error stack<br />
+          - Network inspection <br />
+          - Server/DB health<br />
+          - Reproduce locally<br />
+          Fix:<br />
+          - Retry logic<br />
+          - Constraint validation<br />
+          - Use distributed tracing<br />
+          - Deploy patch<br />
+          - Verify fix in staging<br />
+          - Monitor
+        </div>
+      </details>
 
-    <details class="card" id="auth">
-      <summary>Authentication and JWT Storage</summary>
-      <div class="answer">
-        JWT contains claims in a JSON payload, signed by the server.<br />
-        Used for stateless authentication.<br />
-        Secure with HTTPS, validate signature, expiration, and audience.<br />
-        Store token securely on client.<br />
-        Recommended: HTTP-only cookies<br />
-        Alternatives: sessionStorage/localStorage (less secure)
-      </div>
-    </details>
+      <details class="card" id="auth">
+        <summary>Authentication and JWT Storage</summary>
+        <div class="answer">
+          JWT contains claims in a JSON payload, signed by the server.<br />
+          Used for stateless authentication.<br />
+          Secure with HTTPS, validate signature, expiration, and audience.<br />
+          Store token securely on client.<br />
+          Recommended: HTTP-only cookies<br />
+          Alternatives: sessionStorage/localStorage (less secure)
+        </div>
+      </details>
 
-    <details class="card" id="middleware">
-      <summary>Middleware</summary>
-      <div class="answer">
-        Middleware allows injecting custom logic into the request pipeline.<br />
-        Custom logic in request pipeline. Used for: Auth, logging, CORS.<br />
+      <details class="card" id="middleware">
+        <summary>Middleware</summary>
+        <div class="answer">
+          Middleware allows injecting custom logic into the request pipeline.<br />
+          Custom logic in request pipeline. Used for: Auth, logging, CORS.<br />
 
-        Middleware intercepts requests/responses to add functionality like:<br />
-        - Logging<br />
-        - Authentication<br />
-        - Error handling<br />
-        - CORS
+          Middleware intercepts requests/responses to add functionality like:<br />
+          - Logging<br />
+          - Authentication<br />
+          - Error handling<br />
+          - CORS
 
-        <pre class="line-numbers"><code class="language-csharp">
+          <pre class="line-numbers"><code class="language-csharp">
 public class LoggingMiddleware
 {
     private readonly RequestDelegate _next;
@@ -464,31 +264,31 @@ public class LoggingMiddleware
 }
 app.UseMiddleware&lt;LoggingMiddleware&gt;();
         </code></pre>
-      </div>
-    </details>
+        </div>
+      </details>
 
-    <details class="card" id="distinct">
-      <summary>SQL DISTINCT</summary>
-      <div class="answer">
-        Used to get unique records.<br />
-        Example:<br />
-        SELECT DISTINCT country FROM customers;
-      </div>
-    </details>
+      <details class="card" id="distinct">
+        <summary>SQL DISTINCT</summary>
+        <div class="answer">
+          Used to get unique records.<br />
+          Example:<br />
+          SELECT DISTINCT country FROM customers;
+        </div>
+      </details>
 
-    <details class="card" id="sp-func">
-      <summary>Stored Procedure vs Function - SQL</summary>
-      <div class="answer">
-        SP:<br />
-        - Can modify data<br />
-        - Supports transactions<br />
-        - No return value needed<br />
-        - use with EXEC<br />
-        Function:<br />
-        - Returns value<br />
-        - Used in SELECT/WHERE statements
+      <details class="card" id="sp-func">
+        <summary>Stored Procedure vs Function - SQL</summary>
+        <div class="answer">
+          SP:<br />
+          - Can modify data<br />
+          - Supports transactions<br />
+          - No return value needed<br />
+          - use with EXEC<br />
+          Function:<br />
+          - Returns value<br />
+          - Used in SELECT/WHERE statements
 
-        <pre class="line-numbers"><code class="language-sql">
+          <pre class="line-numbers"><code class="language-sql">
 -- Stored Procedure
 CREATE PROCEDURE GetActiveEmployees
 AS
@@ -509,18 +309,18 @@ END;
 -- Use
 SELECT dbo.GetEmployeeName(1);
         </code></pre>
-      </div>
-    </details>
+        </div>
+      </details>
 
-    <details class="card" id="having">
-      <summary>HAVING vs WHERE</summary>
-      <div class="answer">
-        WHERE filters rows before grouping.<br />
-        HAVING filters groups after GROUP BY.<br />
-        Example:<br />
-        SELECT dept, COUNT(*) FROM employees GROUP BY dept HAVING COUNT(*) &gt;
-        5;
-        <pre class="line-numbers"><code class="language-sql">
+      <details class="card" id="having">
+        <summary>HAVING vs WHERE</summary>
+        <div class="answer">
+          WHERE filters rows before grouping.<br />
+          HAVING filters groups after GROUP BY.<br />
+          Example:<br />
+          SELECT dept, COUNT(*) FROM employees GROUP BY dept HAVING COUNT(*)
+          &gt; 5;
+          <pre class="line-numbers"><code class="language-sql">
 -- WHERE filters before GROUP BY
 SELECT * FROM Sales WHERE Region = 'West';
 
@@ -529,10 +329,3346 @@ SELECT Region, COUNT(*) FROM Sales
 GROUP BY Region
 HAVING COUNT(*) > 100;
         </code></pre>
-      </div>
-    </details>
+        </div>
+      </details>
+    </div>
 
-    <!-- Flashcards End -->
+    <div id="day2" class="tab-content" style="display: none" role="tabpanel">
+      <div class="toc" role="navigation" aria-label="Day 2 Table of Contents">
+        <strong>Quick Links - Day 2</strong>
+        <a href="#design-patterns">Design Patterns</a>
+        <a href="#cqrs">CQRS</a>
+        <a href="#support">Support Approach</a>
+        <a href="#ef">Entity Framework</a>
+        <a href="#salary">Second Highest Salary</a>
+        <a href="#duplicates">Duplicate Records</a>
+        <a href="#duplicates-2">Duplicate using ROW_NUMBER()</a>
+        <a href="#cte">CTE</a>
+        <a href="#even-rows">Even Rows</a>
+        <a href="#pivot">Pivot Table</a>
+      </div>
+
+      <details class="card" id="design-patterns">
+        <summary>Design Patterns Overview</summary>
+        <div class="answer">
+          <strong>Repository:</strong> Abstracts data access, centralizes DB
+          logic.<br />
+          <strong>Singleton:</strong> Ensures one instance per app lifetime.<br />
+          <strong>Facade:</strong> Simplifies a complex subsystem behind one
+          interface.<br />
+          <strong>CQRS:</strong> Separates read and write logic to boost
+          performance.
+        </div>
+      </details>
+
+      <details class="card" id="cqrs">
+        <summary>What is CQRS and where is it used?</summary>
+        <div class="answer">
+          CQRS (Command Query Responsibility Segregation) separates queries from
+          commands.<br />
+          <strong>Use Case:</strong> Performance-sensitive systems,
+          microservices, high read/write traffic.
+        </div>
+      </details>
+
+      <details class="card" id="support">
+        <summary>Support Handling and Telemetry</summary>
+        <div class="answer">
+          <strong>Q:</strong> Have you worked on support?<br />
+          <strong>A:</strong> Yes. Involved in data fixes, telemetry, and client
+          support.<br /><br />
+
+          <strong>Q:</strong> If user is stuck on screen?<br />
+          <strong>A:</strong> Use telemetry, middleware, and logs to trace the
+          issue.<br /><br />
+
+          <strong>Q:</strong> How to enable client to keep working?<br />
+          <strong>A:</strong> Provide workaround or data fix.<br /><br />
+
+          <strong>Q:</strong> What types of support can we provide?<br />
+          <strong>A:</strong> HAR file analysis, quick bug fixes, client
+          communication, and workarounds.
+        </div>
+      </details>
+
+      <details class="card" id="ef">
+        <summary>EF: Code First vs Data First</summary>
+        <div class="answer">
+          <strong>Code First:</strong> Define models in code, DB generated
+          automatically. Best for new projects.<br />
+          <strong>Data First:</strong> Use existing DB and generate models. Best
+          for legacy systems.
+        </div>
+      </details>
+
+      <details class="card" id="salary">
+        <summary>SQL: Second Highest Salary Group-wise</summary>
+        <div class="answer">
+          <pre class="line-numbers"><code class="language-sql">
+WITH SalaryRank AS (
+  SELECT DepartmentID, FirstName, Salary,
+    DENSE_RANK() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS Rank
+  FROM Employees
+)
+SELECT * FROM SalaryRank WHERE Rank = 2;
+          </code></pre>
+        </div>
+      </details>
+
+      <details class="card" id="duplicates">
+        <summary>SQL: Find Duplicate Records</summary>
+        <div class="answer">
+          <pre class="line-numbers"><code class="language-sql">
+SELECT FirstName, COUNT(*) AS count1
+FROM Employees WITH (NOLOCK)
+GROUP BY FirstName
+HAVING COUNT(*) > 1;
+          </code></pre>
+        </div>
+      </details>
+
+      <details class="card" id="duplicates-2">
+        <summary>SQL: Find Duplicates Using ROW_NUMBER()</summary>
+        <div class="answer">
+          <pre class="line-numbers"><code class="language-sql">
+WITH DuplicateRows AS (
+  SELECT *, ROW_NUMBER() OVER (PARTITION BY FirstName ORDER BY EmployeeID) AS dupRow
+  FROM Employees
+)
+SELECT * FROM DuplicateRows WHERE dupRow > 1;
+    </code></pre>
+        </div>
+      </details>
+
+      <details class="card" id="cte">
+        <summary>What is CTE (Common Table Expression)?</summary>
+        <div class="answer">
+          A temporary result set used inside SELECT, INSERT, UPDATE, DELETE.<br />
+          Helpful for recursion or simplification.
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>CTE: Employee Hierarchy Example</summary>
+        <div class="answer">
+          <pre class="line-numbers"><code class="language-sql">
+WITH EmployeeHierarchy AS (
+  SELECT EmployeeID, FirstName + LastName AS FullName, ManagerID, Salary, 1 AS Levels
+  FROM Employees WHERE ManagerID IS NULL
+
+  UNION ALL
+
+  SELECT e.EmployeeID, e.FirstName + e.LastName, e.ManagerID, e.Salary, Levels + 1
+  FROM Employees e
+  INNER JOIN EmployeeHierarchy eh ON e.ManagerID = eh.EmployeeID
+)
+SELECT * FROM EmployeeHierarchy ORDER BY Levels;
+          </code></pre>
+        </div>
+      </details>
+
+      <details class="card" id="even-rows">
+        <summary>SQL: Get All Even Numbered Rows</summary>
+        <div class="answer">
+          <pre class="line-numbers"><code class="language-sql">
+SELECT * FROM (
+  SELECT *, ROW_NUMBER() OVER (ORDER BY EmployeeID) AS rownum
+  FROM Employees
+) AS numbered
+WHERE rownum % 2 = 0;
+          </code></pre>
+        </div>
+      </details>
+
+      <details class="card" id="pivot">
+        <summary>SQL: Pivot Leave Types</summary>
+        <div class="answer">
+          <pre class="line-numbers"><code class="language-sql">
+SELECT EmployeeID, FirstName, EL, CL, PL
+FROM (
+  SELECT e.EmployeeID, e.FirstName, el.LeaveType
+  FROM EmployeeLeaves el
+  JOIN Employees e ON e.EmployeeID = el.EmployeeID
+  WHERE e.EmployeeID = 1
+) AS SourceTable
+PIVOT (
+  COUNT(LeaveType)
+  FOR LeaveType IN (EL, CL, PL)
+) AS PivotTable;
+          </code></pre>
+        </div>
+      </details>
+    </div>
+
+    <div id="day3" class="tab-content" style="display: none" role="tabpanel">
+      <pre><code>
+        Solid Principle
+
+1. Single Responsibility Principle -
+		- Class should have only one responsibility
+		- It becomes easier to change and test
+		
+2. Open Closed Princple -
+		- Open for extension closed for modification 
+		- SRP is prerequisite of OCP
+		- Example: Discount Calculation System
+2. Liskov Substitution Principle
+		- An object of child class must be able to replace an object of the parent class without breaking the application.
+		- Child class should be able to implement all the method of the parent class seamlessly and smoothly.
+		- Example: User Authentication System
+		
+3. Interface Segregation Principle		
+		- Class should not be forced to implement interface that it does not use.
+		- Solution is to create seperate interface and implement those which are required.
+		- Example: Scenario: Multi-Functional Printer System
+
+4. Dipendency Inversion Principle
+		- High level class must not depend upon a lower level class
+		- Example : Scenario: Order Processing System
+
+Inversion of Control (IoC) 
+	IoC is a principle where the control of object creation and dependency management is transferred from 
+	the class itself to an external container or framework.
+	Instead of a class creating its dependencies, an external source (like a framework) provides them.
+
+
+	
+Service LifeTime - Service Lifetime Describe for how long the instance of any class will persist
+1. AddSingleTon
+2. AddScoped
+3. AddTransiant
+
+Middleware Sequence -> Request -> ExceptionHandling 
+						-> HSTS -> HttpsRedirection -> Static Files 
+							-> Routing -> CORS 
+								-> Authentication 
+									-> Authorization 
+										-> Custom Middleware 
+											-> End Point
+
+1) Exception Handling & Security
+• app.UseExceptionHandler("/error"); ⇢ Catches unhandled errors.
+• app.UseHsts(); ⇢ Enforces HTTPS in production.
+• app.UseHttpsRedirection(); ⇢ Redirects HTTP to HTTPS.
+
+2) Static Files
+• app.UseStaticFiles(); ⇢ Serves CSS, JS, images, etc.
+
+3) Routing
+• app.UseRouting(); ⇢ Determines the request path.
+
+4) CORS (Cross-Origin Resource Sharing)
+• app.UseCors(); ⇢ Must come before authentication.
+
+5) Authentication & Authorization
+• app.UseAuthentication(); ⇢ Identifies the user.
+• app.UseAuthorization(); ⇢ Checks user permissions.
+
+6) Custom Middleware
+• app.UseMiddleware&lt;CustomMiddleware&gt;(); ⇢ For custom logic.
+
+7) Endpoint Mapping
+• app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+Use - Use method will execute next middleware or line in sequence
+	- Use method run first and pass the control to  the next method or sequence	in the pipeline
+Run - Run method will terminate the chain
+	- No other middleware method will run after this
+	- Should be placed at the end of any pipeline
+Map - The map extension method is used to match request delegate's based on a request's url path	
+
+IHostBuilder - IHostBuilder is an interface that facilitates the construction and configuration of a host application, 
+			   including setting up configuration, logging, and dependency injection, serving as a foundation for building applications, 
+			   including ASP.NET Core applications.
+IApplicationBuilder - IApplicationBuilder is an interface that defines a class that provides mechanisms to configure an application's request pipeline,
+					  allowing you to add middleware components to process HTTP requests.
+			
+
+
+
+Interview Questions
+
+ 1. .net, .net framework, net core, .net standard differnce
+ 2. Which tenchnology used in azure - blob storage, trigger real time example of blob storage trigger where we can used
+ 3. Why we use azure function instead of API
+ 4. Which Cachning mechanism have you used? Radish Caxhe advantages and disadventages?
+ 5. Where we installed radis cache on client browser or on server broweser?
+ 6. Write code to show product list on UI using react (Using Hooks)
+ 7. Scenario - if we deploy the application on production and user not able to save the data then what is the approach
+ 8. HOw you manage the authentication? where you store the JWT token on client side?
+		Authentication Flow in .NET Core + React
+			-User Logs In → Redirects to Identity Provider (OpenID Connect).
+			- Client Stores the JWT → Uses it for API requests.
+			-Backend Validates JWT → Using middleware.
+
+ 9. What is middleware in .net
+ 10. .net core benefits 
+ 11. Filters (Action and result Difference)  
+ 12. Life cycle MVC 
+ 13. Sql Temp Tables 
+ 14. Performance tuning DB 
+ 15. Token (JWT) , Store , share and how to use 
+ 16. Authentication and authorization
+ 17. Identity server 
+		- IdentityServer is an OpenID Connect (OIDC) and OAuth 2.0 framework that provides authentication and authorization for applications. It allows you to manage user identities and protect APIs.
+		- Why Use Identity Server
+			🔹 Single Sign-On (SSO): Users log in once and access multiple applications.
+			🔹 Secure API Access: Issues JWT tokens for API security.
+			🔹 Supports OAuth 2.0 & OpenID Connect: Industry-standard protocols.
+			🔹 Flexible Authentication: Works with external providers (Google, Azure AD).
+			🔹 Multi-Tenant Support: Useful for large organizations.
+
+
+ 18. Linq and stored Procedure 
+ 19. .net 6 .net 5 , .net core 3.2 Difference 
+ 20. Microservice DB single or multiple db? 
+ 21. ASYC communication how between 2 micro service 
+			-RabbitMQ, Kafka   		- Order Service → Email Service
+			-Kafka             		- Logs, analytics, IoT data	
+			-Hangfire, Quartz.NET 	- Report generation, scheduled tasks	
+			-Redis Pub/Sub 			- Chat, push notifications
+			
+ 22. How to debug maintenance app? 
+ 23. Scenario based: Small change in existing project: Change process  
+ 24. Standard Practice for code checks in and PR and Branch 
+ 25. Difference between IQuarable and IEnurable 
+ 26. PKCE , Oauth 
+	- Understanding OAuth 2.0 Authorization Code Flow
+	
+	- PKCE (Proof Key for Code Exchange)
+		- Problem Without PKCE - Authorization Code Interception Attack
+							   - If an attacker steals the Authorization Code, they can exchange it for an Access Token and impersonate the user.
+		- PKCE prevents code interception by adding an extra security layer:
+		- Before sending an authorization request, the client generates:
+		- A random code_verifier
+		- A hashed code_challenge (sent to the server)
+ 27. Linq to read XML 
+		- XDocument doc = XDocument.Load("products.xml");
+		- var products = from p in doc.Descendants("Product")
+
+ 28. Difference between POST and PUT , best scenario to used
+ 29. Thread safe collection usage details  
+		- When working with multi-threaded applications, using standard collections (List&lt;T&gt;, Dictionary&lt;TKey, TValue&gt;, etc.) can cause race conditions. 
+		  To prevent this, C# provides Thread-Safe Collections under System.Collections.Concurrent.
+		- Thread-Safe Alternative -> ConcurrentBag&lt;T&gt;, ConcurrentQueue&lt;T&gt;, ConcurrentStack&lt;T&gt;, ConcurrentDictionary&lt;K,V&gt;
+ 30. If we convert asp.net app to .net core , how we can use http handlers from asp.net 
+ 31. .net Core middleware (custom usage) 
+ 32. Optimization steps  
+ 33. Scenario based 3 team and you are on 3 Rd  
+ 34. Waiting for someone  
+ 35. Microservices communication internal 
+ 36. Ways for it 
+ 37. Error and exception best way to do exception handling  
+		- Use try-catch with specific exceptions	
+		- Log exceptions using ILogger	
+		- Use global exception handling middleware	
+		- Return proper HTTP status codes	
+		- Use custom exception classes	
+		- Implement retry mechanisms (Polly)	
+		- Always close resources in finally	
+ 38. Azure app to azure communication setup in same tenant 
+		- Managed Identity	 - Secure, automatic authentication				-best for - App Services & Azure Functions	
+		- Azure AD App Registration (OAuth 2.0, PKCE)	 - Web Apps, API authentication	  - best for Web Apps & APIs (OAuth 2.0)	
+		- Service Principal with Client Secret	 - Automation, scripts, background services	-best for - Automation & Background Jobs	
+ 39. Threading and tasking difference  
+ 40. Code review for azure piece 
+ 41. What makes .net core platform independent
+	- Microsoft built CoreCLR, a refactored and modular version of the runtime, specifically designed to run on multiple operating systems.
+	- Having a runtime (CoreCLR) and library (BCL) explicitly designed and implemented for Windows, macOS, and Linux.
+	- Compiling code to a platform-agnostic Intermediate Language (IL).
+	- Using a JIT compiler on the target machine to translate IL into native code just before execution.
+	- Removing or abstracting dependencies on Windows-specific APIs found in the older .NET Framework.
+	
+	
+Q. Code quality check tools
+	- SoalQube 
+	- Codacy
+	- DeepSource
+	- Collaborator
+	- Coverity
+
+Dependency injection 
+  
+ 
+ 1. Use cases where you can use Azure Service Bus and Azure Functions in conjunction with each other.
+ 2. Have you worked with optimizing code bases and SQL queries?
+ 3. How will you optimize SQL performance on Azure SQL?
+ 4. Do you know about Design Patterns? What design patterns have you implemented in your previous organization?
+ 5. Have you used Azure Functions, Azure Service Bus, Azure Data Factory, Azure Synapse Pipelines?
+ 6. Do you know what is Auditing, Why we Audit, Audit Basics. (referencing AfNA videos).
+ 
+ 
+SQL - 
+ 1. Query to get distinct records from Table
+ 2. Scenario where we use SP and where we use function
+ 3. Difference between having and where?
+	- WHERE
+		- Usage : Filters rows before grouping
+		- Applies To Individual rows in the table
+		- Cannot use aggregate functions
+		- Used with select, update, delete
+	- Having 
+		- Usage : Filters groups after grouping
+		- Applies To Aggregated results (like SUM, COUNT)
+		- Can use aggregate functions
+		- Mostly used with GROUP BY and aggregate queries
+ 
+ 
+ 
+ Interview levvia
+ 1. What approach you have taken to created apllication.
+ 2. How you have authorized web APIs? How you have read token in API?
+ 3. How you have identified user from token.
+ 4. In case you have 1000s of request comming to, how would you manage those requests.
+ 5. Have you used cache.
+ 6. What approach you have used in entity framwork code first or database first?
+ 7. In case you have taken database first approach and you have modified in DB, how will you migrate to code? 
+ 8. What are middleware
+ 9. What are Singleton, Scoped, Transiant
+ 10. How you have logged error.
+ 11. What micrrosoft API you have used to log error.
+ 12. In case you have create new id in each request which middleware you will you?
+ 13. What kind of azure services you have used.
+ 14. How scrum work.
+ 15. Which version control you have used azure repos or git and explain? 
+ 16. In case you have a page that we have to show in different type of devices mobile, desktop, laptop, what approach you will take to create app in react?
+ 17. In case you have a screen where data has to load on scroll, what approach you will take?
+ 18. Have you implemented redis?
+ 19. How to log error in azure?
+ 20. What is azure insights?
+ 
+ 
+ 
+ 
+ Rect class
+	Initializing 
+	Mounting 
+	Updating 
+	Unmounting
+	
+ 
+ Caching technology is a method of storing data in a temporary location, or cache, to make it easier and faster to access. 
+ Advantage - Caching can also reduce the network traffic, the server load, and the processing time of web resources.
+				-High Performance - Redis stores data entirely in RAM, leading to extremely fast read/write operations, ideal for applications requiring quick response times. 
+				-Scalability - Redis can be easily scaled horizontally by clustering, allowing it to handle large datasets and high traffic volumes. 
+				-Data Structures Support - Beyond simple key-value pairs, Redis supports rich data structures like lists, sets, sorted sets, and Hashes, enabling flexible data manipulation
+				-Persistence Options - While primarily in-memory, Redis offers persistence mechanisms like snapshots and append-only files (AOF) to prevent data loss in case of server crashes
+				-Ease of Use - Redis has a simple API and is relatively easy to set up and manage
+				-Flexibility - Redis supports various caching strategies like LRU (Least Recently Used) eviction policies for optimal cache management
+ Dis-Advantage - Caching can introduce inconsistency, as the cached data may not reflect the latest changes or updates on the server.
+				-Cost of Memory- Since data is stored in RAM, using Redis for large datasets can be expensive depending on your server configuration
+				-Potential Data Loss - If not properly persisted, data can be lost if the Redis server crashes as data is not stored on disk by default
+				-Limited Storage Capacity - Compared to traditional databases, the storage capacity of Redis is restricted by the available RAM
+				-Complex Persistence Management - Configuring and managing persistence mechanisms like snapshots can add complexity
+				-Not Suitable for Large, Complex Queries - Due to its key-value structure, Redis is not ideal for complex data retrieval operations
+ 
+  
+
+ 
+ 
+ How will you optimize SQL performance on Azure SQL?
+ Answer - Tune your application and apply some best practices that can improve performance.
+		  Tune the database by changing indexes and queries to more efficiently work with data.
+ SQL Server tuning and optimization
+	- Avoid Null value in the fixed-length field -
+	- Never use Select * Statement:
+	- Normalize tables in a database
+	- Keep Clustered Index Small
+	- Use Appropriate Datatype
+	- Store the image path instead of the image itself
+	- USE Common Table Expressions (CTEs) instead of Temp table
+	- Use Small data type for Index
+	- Use Count(1) instead of Count(*) and Count(Column_Name):
+	- Use Stored Procedure
+	- Use Between instead of In
+	- Use If Exists to determine the record
+	- Never Use" Sp_" for User Define Stored Procedure
+	- Practice using Schema Name
+	- Avoid Cursors
+	- SET NOCOUNT ON
+	- Use Try–Catch
+	- Remove Unused Index
+	- Always create an index on the table
+	- Use Foreign Key with the appropriate action
+	- Use Alias Name
+	- Use Transaction Management
+	- Drop Index before Bulk Insertion of Data
+	- Use Unique Constraint and Check Constraint
+	- Avoid Loops In Coding
+	- Use View for complex queries
+	
+	- useDelta package in .net to increase performance - It try to remember the changes of rowversion  and evaluates data.
+	 
+	Query Optimization
+	 -Indexing Strategies
+	 -Optimizing Joins & Queries
+	 -Retrieve Only Required Columns
+	 -Use Efficient Filtering & WHERE Conditions
+	 -Use Query Execution Plans
+	 -Optimize TempDB Usage
+	 -Use Table Variables & Temporary Tables Wisely
+		-Use Table Variables (@Table) for small datasets.
+		-Use Temporary Tables (#TempTable) for larger datasets.
+	 -Reduce Locking & Blocking
+	 -Use Caching & Query Optimization Techniques
+	 -Partitioning Large Tables
+	 -
+	 
+	 -Execution Plan
+	 -Statistic time/IO 
+	 -Spooling
+	 -Hashmatch
+	 -Keylookup
+	 -Badviews
+	 -Sub queries minimization
+	 -Partition Elimination
+	 -Sargable query
+	 -Index Scan 
+	 -Index seek
+	 
+	 -Avoid external grooping
+	 -cross appy vs unpivot
+	 -Rownumber vs offset & fetch
+	 -Rank and sub query 
+	 -Power of over clause
+	 
+Q. What is a deadlock, and how can you resolve or prevent it in SQL Server?
+	- A deadlock occurs when two or more transactions block each other permanently by holding resources that the other transaction needs to complete.
+	- Detect Deadlocks
+		-Using SQL Server Error Log  - EXEC sp_readerrorlog 0, 1, 'deadlock';
+		-Using SQL Profiler (Deprecated, Use XE Instead)
+		-Using Extended Events
+	- Resolve Deadlocks
+		-Identify & Kill Blocking Query
+		-Use Deadlock Priority
+	- Prevent Deadlocks
+		-Access Resources in the Same Order
+		-Use NOLOCK Hint (Only When Read Consistency Isn’t Critical)
+		-Reduce Transaction Scope & Lock Time
+		-Use Snapshot Isolation (Prevents Read/Write Conflicts)
+		-Use Indexing to Avoid Unnecessary Locks
+		-Implement Retry Logic in Applications
+	- SQL Server detects deadlocks automatically and terminates one process.
+	- Use indexing, transaction ordering, and snapshot isolation to prevent deadlocks.
+Q. Concurrency Control
+	- Concurrency Control ensures data consistency and integrity when multiple transaction access the database simultenously.
+	  It prevents issues like
+	  -Lost update - Overwriting changes made by other users.
+	  -Dirty read -Reading uncommited changes from another transaction.
+	  -Non Repeatable Reads - Data changes between two reads in the same transaction.
+	  -Phantom reads - A query returns different results due to newly inserted/deleted rows.
+	- SQL server handles concurrency using two main techniques
+	  -Passimistic Concurrency Control (Locks to Prevent conflict)
+		 -Prevents cuncurrency issue by locking resources(row, pages, tables)
+		 -Ideal when write operation are frequent.
+		 -Used by default in Read Committed isolation.
+	  -Optimistic Concurrecny Control (Detects conflicts and retries updates)
+		-Allow multiple transaction to read the same data without locking
+		-Conflicts are detected at update time, and affected transaction must retry.
+		-Ideal when read operation are frequent.
+		
+		-Implement Optimistic Concurrency
+			-Using ROWVERSION (Recommended)
+			-Using DATETIME or CHECKSUM (Alternative to ROWVERSION)
+			-Using SNAPSHOT ISOLATION (Database-Level Optimistic Concurrency)
+			
+	 
+	 
+	 
+	 
+
+Radis Implementation
+https://www.c-sharpcorner.com/article/implementation-of-the-redis-cache-in-the-net-core-api/
+
+
+JWT Implementation
+https://www.c-sharpcorner.com/article/jwt-token-authentication-using-the-net-core-6-web-api/
+ 
+
+
+What is sarding?
+	-Sharding is a database partitioning technique that splits a large database into smaller, faster, 
+	 and more manageable pieces (shards). Each shard is a separate database that contains a subset of the overall data.
+	-Sharding is used to improve performance, scalability, and availability in large-scale applications.
+
+
+What is service bus?
+
+
+Service Bus
+	-Azure service bus is fully managed enterprise messaging service used for relible asynchronous communication beteen applications and services.
+	-It enables decoupled message exchange, ensuring that messages are delivered even if receiving service is temperarily unavailable.
+	-Core components
+		-Namespace
+		-Queues
+		-Topics & Subscriptins
+		-Dead Letter Queuse
+		-Message Session
+	-Use Cases of Azure Service Bus
+		-Decoupling microservices
+		-Reliable Event-driven communication
+		-Load balancing workload(Ex. background task processing)
+		-Message Routing with topic/subscription(e.g. nontification	system)
+
+
+Service Bus - Reliable messaging/Enterprise message broker, Decoupling apps, workflows, FIFO , Cost-higher,  Medium (256KB - 1MB) 
+Storage Queue- simple queue storage(Simple message queuing), use case: simple async procesing, no order guaranteed, Cost -low, Small (64KB)
+Event grid- Event routing/notification, Event-Driven, Event based architecture, No ordering guaranteed, cost-Pay per operation, Small (typically JSON)
+Event Hub- High throughput Event streaming/Data streaming , Telemetry IoT, real-time data, Partitioned data, cost-Pay per throughput unit, Larger (1MB)
+
+		
+	
+
+Real-time data processing: Process data as it arrives, such as for monitoring systems, IoT, and live analytics 
+Scheduled tasks: Run scheduled tasks, such as database cleanup or backups 
+File processing: Process new or updated files in a storage container 
+Reminders and notifications: Send reminders and notifications 
+Web APIs: Create lightweight web APIs 
+
+
+1. What are the types of Queues offered by Azure?
+	Storage Queue 
+		- Part of Azure's storage infrastructure 
+		- Provides messaging within and between services
+		- Best suited when users need to to store more then 80GB of message in queue
+		- It can provide side logs of all transaction executed against the users queues
+	Service bus Queue 
+		- Part of Azure's storage infrastructure
+		- Integrates application or application components that span multiple component protocols, network environments etc.
+		- Provides a FIFO style of delivery 
+		- The user's queue size had to remain under 80 GB
+	
+
+2. Application Insights
+		- Application Insights is an extensible monitoring & diagnostics service for web developers with powerful ad-hoc analytics capabilities.
+		- The Application Insights client SDK for .NET allows you to log event, aggregated data, exceptions, dependency, and metrics to Azure for future analysis.
+
+3. What are the advantages of Azure Resource Manager?
+		- Azure resource manager enables users to manage their usage of application resources
+		- ARM helps deply, manage and monitor all the resources for an applcation, a solution or a group
+		- Users can be granted access to resources they require
+		- Obtain comprehensive billing information for all the resources in the group
+		- Provisioning resources is made much easier with the help of templates
+4. How has integrating hybrid cloud been useful for azure?
+		- The hybrid coud boosts productivity by using azure stack by building and deploying application for cloud and on-premises applications
+		- Obtain greater efficiency with a combination of Azure services DevOps process and tools
+		- Users can take advantage of a constantly updated Azure services and other Marketplace applications
+		- Enables to deply applications regardless of its location, the cloud or on-premises
+		- This enables applications to be created at  a higher speed
+5. What is federation in Azure SQL?
+		- SQL Azure federation provides tools that can enable developers to access or share database among themselves in SQL Azure
+		- It enables users to take advantage of resources within the cloud 
+		- Allows users to have their own database or share databases amongest each other 
+		- Reduces the responsibility of a single point of failure
+		- Provide cost-effectiveness, by using cloud resources only when needed
+6. Azure Trafffic manager 
+		- Azure traffic manager is a traffic load balancer that enables users to provide high availability and responsiveness by distributing 
+		  traffic in an optimal manner across global azure region
+		  
+		
+
+Topic to cover
+	C# 
+		- Introduction, History,
+		- C# Program structure, Keywords, Statements, Expressions, and Operators, Strings, CTS, Control structures, 
+		- Array(Single Dimension, Double Dimension & Jagged Arrays), "
+		- Convert Class,  Types ( class, struct, enum)
+		- "OOPS, Encapsulation, Access Specifier, Properties,
+		- Inheritance, Polymorphism, Methods, parameterized methods(out, ref, params), Collections, Exception Handling, Generics, DateTime class"
+		- "Overloading methods, method return values, method returning objects,
+		- Constructor, Overloading constructors, Constructor with detaulf paramters, Inheritance, abstract classes, interfaces, method overriding, etc., var keyword, object keyword, this keyword, Properties, Indexers"
+		- Lambda Expressions in detail
+		- "File Handling System.IO, Delegates
+		- Built in delegates Action&lt;&gt;, Func&lt;&gt; and Predicate&lt;&gt;"
+		- "POCO classes ( Public properties),
+		- static method, static method returning object,
+		- POCO class with CRUD operations on Object array"
+		- Extension methods, anonymous types, partial methods, etc.,
+		- Introduction to Threads, Examples
+		- Design pattern concepts
+	MVC
+		- Introduction MVC architeture, 
+		- Difference between nTier and MVC architecture
+		- Difference between Webforms and MVC.NET"
+		- Standard Controls, List Controls, Validation Controls,  Master Pages, State Management Techniques (ViewState, QueryString, Session, Cookie, Application State, Cache)
+		- "Controllers, Action Methods, return types, View, Layout Template
+		- Passing Data from Controllers to view(ViewBag, ViewDate and TempData)"
+		- "Controllers, Action Methods, return types, View, Layout Template
+		- Passing Data from Controllers to view(ViewBag, ViewDate and TempData)"
+		- "Routing, Creating a route, adding multiple route
+		- Route.config.cs file, HTML Helpers, Passing data from View to controllers, Action Parameters,View Models/Objects,Model Binding,FormCollection, Perform CRUD operations on Database table"
+		- Error Handling And Logging,Secuing MVC Application,Forms Authentication And Autherization,Bundling and Minification
+		- Assignment
+	SqlServer
+		- Introduction, Database Basics,
+		- Normalization, SQl Server introduction, installation,
+		- SSMS, Object Explorer, Issuing query"
+		- "Creating your First SQL Table
+		- Installing Sample Database (Adventure Works) and Querying
+		- Deep Dive into Querying
+		- Start Writing some SQL code
+		- Deep Dive into SQL Querying"
+		- "SQL Joins
+		- Dates / Aggregation and String Functions
+		- SQL Date Functions
+		- SQL Aggregation and String Functions
+		- SQL Server Performance - Indexing Basics"
+		- "Clustered Index
+		- Create Non-cluster Index
+		- Composite Index
+		- Use or not use indexes
+		- Deciding factors in creating indexes
+		- Using SQL Profler for Indexes
+		- Reorganize and Rebuild Indexes
+		- SQL Profile with Index Tuning, Functions, Procedures"
+	Entity Framework
+		- Different approaches in Entity Framework
+		- Code First, Model First and Entity First Approaches,
+		- Example on Code First approach (Perform CRUD Operations)
+		- Building a Model using Database-First Workflow
+		- Example: A Quick Tour of EDMX Designer
+		- Uncovering the EDMX
+		- Connection Strings
+		- Dealing with Database Changes
+		- "Create collection to store the objects as records and perform crud operations into it
+		- Setting up the Database
+		- Importing Stored Procedures
+		- Function Imports
+		- Working with Enums"
+		- "Code First with an Existing Database
+		- Migrations: Enabling Migrations
+		- Migrations: Adding a New Class
+		- Migrations: Modifying an Existing Class
+		- Migrations: Deleting an Existing Class
+		- Migrations: Recovering from Mistakes
+		- Migrations: Downgrading a Database"
+		- "Seeding Database
+		- Exercises
+		- Summary
+		- Overriding Code-First Conventions"
+		- "Introduction
+		- Overriding Conventions
+		- Data Annotations
+		- Demo: Data Annotations
+	Web API
+		- Introduction REST, Architecture, Web debugging tools like GoogleARC, Postman, Fiddler, etc.,
+		- Web API intreacting with database
+		- "Associations and URI Mapping 
+		- Implementing Sorting, Paging, Filters"
+		- Security in ASP.NET Web API,
+		- "Implementing Sorting, Paging, Filters
+		- Hands On - Implement Web API using advanced options"
+	NUnit
+		- Understand Testing
+		- Test Driven Development (TDD)
+		- Create Test Project / Setting up nunit 
+		- Creating Test classes and methods
+		- Launchers Different options of running the tests"
+		- "Closing Statements Working with Ignore test
+		-  Hands On- Create, test with Nunit
+		- Example"
+	Microservices
+		- Introduction
+		- Microservices Principles
+		- Monolithic vs SOA vs Microservices
+		- Microservices Architecture
+		- Advantages of Microservices
+		- Disadvantages of Microservices
+		- Microservices Dev Tools
+		- Microservices Cloud Deployment
+		- Microservices Orchestration
+		- Introduction to API Gateway
+		- API Gateway Features
+		- Introduction to Patterns for Microservices
+		- Database per Service
+		- Shared database
+	
+	
+Q. Test Driven Development (TDD)
+		- Purpose of this is to understand the requirement well.
+		- Iterative development and testing.
+		- Catch defect in early stages.
+		- Another advantage is you are foreced to write test cases.
+		- Code starts getting documented
+		- 1 more advantage of TDD is if you come across a defect in production and  before fix the defect, if you write a test case 
+		  first, you can ensure that when that defect occurs again you can catch it very easily.
+
+Q. MOQ test
+		- Moq (Mock Object Framework for .NET) is a framework that helps developers create mock objects to test C# code. 
+		  Mocking allows developers to isolate and test parts of their code without having to worry about the behavior of real dependencies.
+		- 
+ 
+Q. If we convert asp.net app to .net core, how we can use http handlers from asp.net 
+	ASP.NET HttpHandler - In the simplest terms, an ASP.NET HttpHandler is a class that implements the System.Web.IHttpHandler interface.
+		ASP.NET HTTPHandlers are responsible for intercepting requests made to your ASP.NET web application server.
+		They run as processes in response to a request made to the ASP.NET Site.
+		The most common handler is an ASP.NET page handler that processes .aspx files
+	ASP.NET offers a few default HTTP handlers:
+		Page Handler (.aspx): handles Web pages
+		User Control Handler (.ascx): handles Web user control pages
+		Web Service Handler (.asmx): handles Web service pages
+		Trace Handler (trace.axd): handles trace functionality
+	
+	In ASP.NET Core, HTTP Handlers (as used in classic ASP.NET) no longer exist in the same way. 
+	However, you can achieve the same functionality using Middleware or Endpoint Routing.
+	
+Q. Threading and tasking difference  || Thread vs Task
+	Threading refers to creating multiple independent units of execution within a single process, 
+		allowing for concurrent execution of different parts of a program.		
+    Tasking - while "tasking" generally refers to a more structured approach to managing work units, 
+		often utilizing a thread pool to efficiently execute tasks, 
+		with a focus on better error handling and management compared to raw threads;
+	Threads are lower level constructs which are used for managing independent parts of execution 
+	while taks provides higher level abstractions for asynchronous programming and parallel processing.
+	And tasks simplify thread management and offer better error handling 
+	
+	Task - A higher level abstraction introduced in the Task Parallel Library (TPL) to present a unit of work. It is designed to simplify 
+		   asynchronous programmming and parallel processing. Tasks abstract away the low-level details of thread management and provide 
+		   more developer-friendly approach to current programming.
+		
+	1. The Thread class is used for creating and manipulating a thread in Windows. A Task represents some asynchronous operation 
+		and is part of the Task Parallel Library, a set of APIs for running tasks asynchronously and in parallel.
+	2. The task can return a result. There is no direct mechanism to return the result from a thread.
+	3. Task supports cancellation through the use of cancellation tokens. But Thread doesn't.
+	4. A task can have multiple processes happening at the same time. Threads can only have one task running at a time.
+	5. We can easily implement Asynchronous using ’async’ and ‘await’ keywords.
+	6. A new Thread()is not dealing with Thread pool thread, whereas Task does use thread pool thread.
+	7. A Task is a higher level concept than Thread.
+	8. Async does not use or create thread at the background
+	9. Asynchrony is a form of concurrency.
+	
+	-Thread and task are two different ways to do multithreading
+	-Thread is a general programming concept in all programming language
+	-Microsoft created Task in .Net to simplify the use of threads.
+	-Tasks are like a wrapper over threads and internally tasks uses thread only.
+
+Q. Thread Pool
+	 - It provides a pool of worker threads that can be used to execute tasks without the overhead of creating a new thread for each task.
+	 - It allows you to efficiently execute asynchronous and parallel operations without explicitly creating and managing threads yourself.
+	 - ThreadPool can be used when we have short running task, in case of long running task independent thread should be created.
+	 
+Q. Error and exception best way to do exception handling
+	1. Use Global Exception Handling Middleware
+	2. Use the Built-in UseExceptionHandler Middleware
+	3. Use Try-Catch Blocks for Specific Cases
+	4. Use Exception Filters (For MVC)
+	5. Log Exceptions with Serilog
+	6. Custom Exception Classes for Better Error Handling
+	
+	Best Practices Summary
+	✅ Use Global Exception Middleware for centralized handling.
+	✅ Use UseExceptionHandler for built-in error handling.
+	✅ Use Try-Catch selectively in controllers or services.
+	✅ Log errors properly using Serilog.
+	✅ Use custom exceptions to categorize errors.
+	✅ Never expose sensitive details in error responses.
+		
+Q.  Azure Application Insights
+	Azure Application Insights detects and diagnoses anomalies in web apps
+
+Q. Concurrency - Executing multiple task at same time
+	- Executing multiple tasks in a same core using overlapping or time cycling
+	- Goal - making program usable
+	- Perspective - Software Design : Composition of independently executing computations in a co-operative fashion.
+	- Resource Utilization : Light
+Q. Parallelism  - Executing multiple task at same time
+	- Executing multiple tasks in different core
+	- Goal : performance
+	- Perspective : Hardware-executing computational parallel
+	- Resource Utilization : heavy
+
+Q. Async & Await
+	- async keyword: Marks a method as asynchronous.
+	- await keyword: Suspends the method execution until the awaited task completes.
+Q. Security
+	- Oauth, Openid, Openid connect,
+	- Single Sign on Approaches
+	- Refresh Token
+	- JWT Token
+Q. Domain driven Design 
+	- Repositry Pattern
+	- Aggregate Root
+	- Event sourcing 
+	- Mediator
+	- CQRS
+Q. Databse design in microservices
+	- Multi tanent design
+	- Single DB design Tenant
+	- Multi DB Multi Tenant
+	- Schema multitenant
+Q. Communication between microservices
+	- Sync Communication
+	- Async communucation 
+	- Saga pattern
+	- Queues (RabitMQ, or something else)
+	- WebApI
+Q. Configure
+	- Configure method specifies how the app reponds to HTTP request and response. It is used to add middleware component.
+Q. Dependency Injection
+	- Dependency Injection helps to create Loosely Coupled design of the application
+Q. Middleware
+	- A middleware is a component(class) that is executed on every request in the ASP.NET core application.
+	- In .NET, middleware is software that handles requests and responses in an app pipeline.  
+	- They are just like chained to eachother and for a pipeline.
+	- The incomming requests are passed through this pipeline where all middleware is configured, and middleware is can perform some action 
+	  on the request before passing it to the next middleware. Some as for the responses, they are also passing through the middleware but
+	  in reverse order.
+Q. Service Life Time
+	- Service life time desribe for how long the instance of any class will persist.
+	- AddSingleton - create only one instance when the service is requested for the first time. And then the same instance will be shared by all different requests.
+	- AddScoped - Create single instance for each request. For a different http request there will be a different instance.
+	- AddTransiant - This instance is not shared at all. Every time a new instance will be created.
+	
+	-AddSingleton → Logger, Configuration settings
+	-AddScoped → AccountService (because it uses DbContext)
+	-AddTransient → CurrencyConverter (lightweight utility)
+
+Q. Inprocess and Outofprocess hosting
+	- InProcess - Pure IIS Hosting - Process name is w3wp.exe. Only one web server (IIS)
+	- OutofProcess - Process name is dotnet.exe. Two web servers (IIS/Nginx/Apache + kestrel) on web server.
+	- Kestrel 
+			- Lightweight web server useed for hosting.
+			- cross platform and can be used with other web servers like IIS, Nginx, and Apache.
+			- Kestrel is open source like .net core.
+	- IIS 
+			- IIS is complete web server which is also used for hosting 
+			- IIS can only run in windows
+			- IIS is not open source like .net framework
+Q. USE, RUN and Map method
+	- Request delegate handle each http request and are used to build request pipeline by using RUN, MAP and USE extension methods.
+	- USE - this method will use next middleware method
+	- RUN - terminates chain, no other middleware will run after this. should be placed at the end of pipeline.
+	- MAP - Execute middleware if path requested by user equals path provided in parameter.
+Q. Host in ASP.net core
+	- The host CONFIGURES a server like kestrel or IIS and request processing pipeline.
+Q. Save Configuration techinues
+	- assSettings.json
+	- Azure keyvault 
+	- Environment variables
+	- In-Memory .net objects
+	- Commandline arguments
+	- Custom provider
+Q. Complete Request Processing Pipelines
+	- HTTP Request -> Middleware - > Routing -> Controller Initialization ->
+																			|
+	- Response &lt;-	View Rendering	&lt;- Data Result/View Result	&lt;- Result Execution &lt;-	Action method executions &lt;-
+
+Q. Dot Net Standard 
+	- .Net standard is not a framework. Dot Net standard defines a set of API's that the platforms must implement to be complient
+		with .Net standard.
+	- .NET Standard is a specification that defines a common set of APIs that must be implemented by all .NET platforms (.NET Framework, .NET Core, Xamarin, etc.). 
+	  It allows developers to write cross-platform libraries that work across different .NET versions.
+	- .Net standard defines a set of rules which if any base class library of any framework will follow then the framework will be called .Net Standard
+Q. Middleware
+	- In ASP.NET Core, middleware is a pipeline of request-processing components that handle HTTP requests and responses. 
+	- Each middleware component:
+		- Processes the request (e.g., authentication, logging).
+		- Decides whether to pass the request to the next middleware.
+		- Processes the response on its way back.
+	- Middleware - There are middlewares, which are provided by the .NET Core framework like static file, routing, CORS, Authentication, Authorization.
+	- Request 
+		-> HSTS 
+			-> HttpRedirection 
+				-> Static files 
+					-> Routing 
+						-> CORS 
+							-> Authentication 
+								-> Authorization 
+									-> Custom Middleware 
+										-> Endpint
+Q. Modelbinding
+	- Modelbinding maps data in an HTTP request to controller action method parameter
+Q. Mocking
+	- Mocking in C# is used for unit testing to simulate the behavior of dependencies without relying on real implementations. 
+	- This is particularly useful when testing services, repositories, or external API calls.
+	- Mocking Frameworks in C#
+		- Moq (Most commonly used)
+		- NSubstitute
+		- FakeItEasy
+		- Rhino Mocks
+	- When to Use Mocking
+		- When testing components that depend on external services or databases.
+		- When isolating a specific unit for testing.
+		- When you need to simulate various scenarios without modifying real data.
+Q. CORS
+	- Cross-Origin Resource Sharing is a security feature in web browsers that controls how resources (like APIs) 
+	  can be accessed from a different origin (domain, protocol, or port) than the one serving the web page.
+	 
+Q. Strategies to Enhance the Performance of a .NET Core Application
+	- Asynchronous Programming
+	- Caching Strategies
+		- Response Caching
+		- Distributed Caching
+	- Database Optimization
+		- Efficient Queries
+		- Indexes
+		- Batching
+	- Efficient Serialization
+	- Code Optimization
+	- Monitoring and Profiling 
+Q. Performance considerations or best practices when using Entity Framework.
+	- Minimize Database Round Trips
+	- Use Asynchronous Queries
+	- Lazy Loading vs. Eager Loading
+		- Lazy Loading: It loads related data automatically when accessed (via navigation properties). 
+						While convenient, it can cause multiple database queries and impact performance if not controlled.
+		- Eager Loading: Use .Include() to load related entities in a single query to reduce multiple round trips to the database.
+	- Explicit Loading
+	- Limit Data Retrieval
+	- Use Query Caching
+	- Minimize the Number of Context Instantiations
+	- Use Compiled Queries
+	- Use Raw SQL Queries for Complex or Performance-Critical Queries
+	- Avoid Tracking When Not Needed
+	- Use Connection Pooling
+	- Profile and Optimize Queries
+	
+Q. Performance in .Net core
+	- Optimize Database Queries 
+		- use async/await
+		- Use Efficient Querying - Use .AsNoTracking() for read-only queries
+		- Use Stored Procedures for Complex Queries
+		- Enable Caching - Use Redis or MemoryCache
+	- Optimize API Performance
+		- Use Response Caching
+		- Use Compression (Gzip, Brotli)
+		- Minimize JSON Serialization Overhead
+	- Optimize Application Startup
+		- Use Dependency Injection Wisely
+		- Use Background Services for Long-Running Tasks
+	- Optimize Memory Usage
+		- Use IAsyncEnumerable&lt;T&gt; for Streaming Large Data
+		- Use Object Pooling 
+		- Dispose Unused Objects - Implement IDisposable and use using statements for cleanup.
+	- Improve Concurrency & Scaling
+		- Use Asynchronous Programming
+		- Enable Load Balancing
+		- Optimize Threading with Parallel Processing
+	- Use Profiling & Monitoring
+		- Use Application Insights
+		- Enable Logging
+		- Use Performance Profiling Tools - DotTrace, PerfView, or BenchmarkDotNet for identifying bottlenecks.
+	
+Q. Duende IdentityServer
+	-Duende IdentityServer is the official successor to IdentityServer4, built by the original creators after 
+	 they stopped developing IdentityServer4. It's a modern, fully-featured OpenID Connect and OAuth 2.1 framework for ASP.NET Core.
+ 	 
+Q. Code First
+	- Code First is great for greenfield projects where you have full control over your domain 
+	  models and want the flexibility to evolve your database schema over time.
+Q. Database First 
+	- Database First is useful when dealing with legacy systems or when you 
+	  already have an existing database that you don’t want to rewrite.
+	
+Q. Agile
+	- Agile is an approach to project management that emphasises on sprints.
+Q. SonarQube
+	- SonarQube is an open-source platform used for continuous code quality inspection.
+	- Features
+		- Static Code Analysis – Detects bugs, vulnerabilities, and code smells.
+		- Security Scanning – Identifies security issues using rules from standards like OWASP, SANS, and CWE.
+		- Code Quality Metrics – Measures maintainability, reliability, and security ratings.
+		- Technical Debt Estimation – Helps understand the effort required to fix issues.
+		- CI/CD Integration – Works with tools like Jenkins, Azure DevOps, GitHub Actions, and GitLab CI/CD.
+		- Multi-Language Support – Supports Java, C#, JavaScript, TypeScript, Python, and more.
+		- Code Coverage & Duplication Detection – Analyzes test coverage and detects duplicated code.
+		- Quality Gates – Enforces coding standards before merging code.
+	- What type of issues it fix
+		- Bugs (Reliability Issues)
+		- Vulnerabilities (Security Issues)
+		- Code Smells (Maintainability Issues)
+		- Code Duplications
+		- Test Coverage
+	- dotnet tool install --global dotnet-sonarscanner
+	- dotnet sonarscanner begin /k:"my_project" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="&lt;TOKEN&gt;"
+	- dotnet build
+	- dotnet sonarscanner end /d:sonar.login="&lt;TOKEN&gt;"
+Q. Set entity - get entity dynamically
+Q. Resharper - code refector tool 
+Q. Bugsnag - Error Monitoring. Monitor exceptions, maintain stability, and streamline your debugging workflow with actionable insights into every error
+Q. RabbitMQ
+	- RabbitMQ is a message broker that facilitates communication between different applications, services, or components in a distributed system.
+	- Key Features
+		- Message Queuing – It stores and forwards messages between producers (senders) and consumers (receivers).
+		- Decoupling – Enables loose coupling between services, making systems more scalable and resilient.
+		- Exchange Types – Supports different routing mechanisms like direct, fanout, topic, and headers exchanges.
+		- Persistence – Messages can be stored to disk to survive broker restarts.
+		- Clustering & High Availability – Supports clustering and mirrored queues for fault tolerance.
+		- Message Acknowledgment & Durability – Ensures messages are delivered and processed reliably.
+	- How RabbitMQ Works
+		- Producer sends a message to an Exchange.
+		- The Exchange routes the message to a Queue based on its type and binding rules.
+		- A Consumer subscribes to the queue and processes the message.
+	- When to Use RabbitMQ
+		- Microservices communication
+		- Event-driven architectures
+		- Asynchronous processing (e.g., order processing, email notifications)
+		- Load balancing tasks across multiple workers
+Q. What is Event-driven architectures in azure
+	- Event-driven architecture (EDA) in Azure is a design pattern where systems communicate through events instead of direct calls.
+	- Key Concepts of Event-Driven Architecture
+		- Events – A significant change in state, such as a new order being placed.
+		- Event Producers – Services or applications that generate events.
+		- Event Handlers (Consumers) – Applications that respond to events.
+		- Event Brokers – Middleware that routes events from producers to consumers.
+Q. CQRS 
+	- CQRS (Command Query Responsibility Segregation) is a software architectural pattern that separates read and write operations for a data store. 
+		   This separation allows better scalability, security, and performance optimization by using different models for querying and updating data.
+	- Key Concepts
+		- Command Model (Write Side)
+		- Query Model (Read Side)
+	- When to Use CQRS
+		- Large, complex applications with high scalability needs.
+		- Systems that require different read and write optimizations.
+		- Event-driven applications (e.g., financial systems, order processing).
+		- Applications where audit logs and history tracking are crucial.
+Q. Access control (IAM)
+	- Azure Identity and Access Management (IAM) helps control who can access your Azure resources, 
+	  what they can do with them, and what areas they have access to. It provides role-based access control (RBAC), 
+	  identity federation, and security policies to ensure secure resource management.
+Q. Event Grid
+	- Build solutions with bi-directional communication between MQTT clients and serverless architectures for event-driven applications
+	- Azure Event Grid Namespace enables the MQTT broker capability, pull delivery, and push delivery at scale.
+	- 
+Q. MQTT 
+	- MQTT (Message Queuing Telemetry Transport) is a lightweight, publish-subscribe messaging protocol designed for low-bandwidth, 
+		high-latency, or unreliable networks. 
+		It is commonly used in IoT (Internet of Things) applications for real-time communication between devices.
+	- Common Use Cases
+		-IoT & Smart Devices (smart homes, wearables, industrial automation).
+		-Remote Monitoring (agriculture, healthcare, environmental sensors).
+		-Real-Time Messaging (chat applications, live data feeds).
+Q. Managed Authorization ID
+	- A Managed Authorization ID typically refers to an identifier associated with a user, application, or service that is managed by an external or centralized authorization system. Some key points:
+	- Example Usage
+		-In OpenID Connect (OIDC) or OAuth 2.0, an Authorization Server (AS) may assign a Managed Authorization ID to an application requesting access.
+		-In Active Directory (AD) or IAM solutions, the ID may be centrally managed for auditing and compliance.
+Q. System Authorization ID
+	- A System Authorization ID usually refers to an identifier used internally by a specific system for authorization purposes. Some key aspects:
+	- Example Usage
+		-In a database system (e.g., IBM Db2, Oracle), a System Authorization ID is used to grant database access permissions.
+		-In an operating system, a System Authorization ID may be a unique identifier for a user/service account that determines access rights to system resources.
+Q. Azure Message Queueing Services
+	- In Azure, a message queue is a cloud-based service that enables reliable and scalable asynchronous communication between different components of an application.
+	- Azure Storage Queue 
+		-A simple, cost-effective queue for basic messaging needs.
+		-Best for: Decoupling lightweight workloads, processing background jobs.
+		-FIFO (First-In-First-Out) order (but not guaranteed in high-load scenarios).
+		-Can store messages up to 7 days.
+		-Message size limit: 64 KB.
+		-No built-in pub/sub support.
+	- Azure Service Bus Queue
+		-A more advanced queuing system with enterprise-grade features.
+		-Best for: High-reliability messaging, transactions, and FIFO ordering.
+		-Guaranteed FIFO with sessions.
+		-Dead-letter queue (DLQ) for handling failed messages.
+		-Scheduled messages and message deferral.
+		-Duplicate detection to prevent processing the same message twice.
+		-Supports transactions for atomic message processing.
+		-Message size: 256 KB (Standard) | 1 MB (Premium).
+		-Ideal for microservices and distributed applications.
+	- Azure Event Grid
+		-A real-time event routing service for event-driven architectures.
+		-Best for: Event-based systems, real-time notifications.
+		-Push-based, low-latency event delivery.
+		-Supports event filtering and routing.
+		-Integration with Azure services (Blob Storage, Azure Functions, Logic Apps).
+		- Azure event grid allows for uniform event consumption using publish-subscribe model 
+		  allowing react to relevent events across both azure and non-azure services in real-time fashion.
+		-Event-What happened
+		-Event Source-Where the event took place.
+		-Topic-The endpoint where publisher send events.
+		-Event Subscriptions-The end point or built in mechanism to route events, sometimes to more then one handler.
+		-Event handler-The app or service reaccting to the event.
+		-Scenario and use cases
+			- Serverless application architecture - React instantly to events on blob storage and process data.
+			- Operations automation - Notify azure automation when azure Resources change.
+			- Connect your app with other services with event grid topics.
+			
+	- Azure Event Hubs
+		-A highly scalable event ingestion service for big data and analytics.
+		-Best for: Streaming large volumes of telemetry/log data.
+		-Designed for high throughput scenarios.
+		-Can handle millions of events per second.
+		-Supports partitioning for parallel processing.
+		-Reliable for zero data loss.
+		-Scalable up to terabyte of data and millions of events per second.
+		-Big Data event streaming service.
+		
+		-When to use
+			-Anomaly detection 
+			-Application logging
+			-Analytics pipeline, such as clickstream
+			-Live dashboarding
+			-Archiving data
+			-Transaction Processing
+			-User telemetry processing 
+
+	- Event Hubs for Bigdata ingestion 
+	- Event Grid for one-off event capture
+	- Service Bus messaging for Pub/Sub
+	- Service Bus Queue for Message Processing 
+	- Storage queue for Message processing
+Q. Azure function 
+	- Azure Function is a solution for easily running small pieces of code, or functions in a cloud.
+	- You can write just the code you need for the problem at hand, without worriying about a whole application or the infrastructure to run it.
+	- Key features
+		- pay-per-use price model
+		- bring your own dependencies
+		- Integrated security
+		- Simplified integration
+		- Flexible development
+		- Open source
+Q. Keyvault
+	- three ways to authenticate Azure Key Vault
+		- Managed Identities for Azure Resources
+		- Service Principle and certificate
+		- Service Principle and secret 
+
+Q. Deletgate
+	- A delegate is a variable that holds the reference to a method or a pointer to a function.
+	- A delegate can refer to more then one methods of same type and parameter.
+	- Delegate is kind of representative which will helps us to callback and do the data communication. 
+	- When to use Delegate - When we need to pass a method as a parameter.
+	Difference between event and delegate	
+		- Event is a notification machanism that depends on delegates.
+		- An event is dependent on delegate and can not be created without delegate.
+		- Event is like a wrapper over the delegate to improve security.
+	- Types of delegate
+		- Single-cast Delegate
+		- Multi-cast Delegate
+		- Generic Delegate (Func, Action, Predicate)
+		- Anonymous Delegate
+		- Lambda Expressions
+		- Delegate as Callback
+		- Event Delegates
+Q. this in c#
+	- this keyword is used to refer to the current INSTANCE of the class.
+	- this keyword avoids the name confusion between class field and constructor parameters.
+	
+Q. Private Constructor
+	- A class with private constructor can not be inherited.
+	- We can not create an object of private constructor.
+	- Many times we do not want to create instance of certain classes like utility, common routine classes.
+Q. Interface & Abstract
+	- Interfaces are implemented, 
+			Interface is a contact between parties,
+					Multiple inheritence is possible
+						Interface is a contract.
+							Interface helps to identify abstraction.
+	- Abstract classes are inherited, 
+			Share common logic in child classes, 
+					There is no multiple inheritence
+
+	- Technically yes abstract class can become a interface but in complicated scenarios it can be design mistake.
+	- Abstract class without anything half defined can be architecural mistake.
+
+Q. Explicit interface
+	- Its members are only accessible through the interface, not directly through the implementing class.
+	- This is useful when a class implements multiple interfaces that have members with the same name, helping to avoid naming conflicts.
+	- Avoids method name conflicts when implementing multiple interfaces.
+	- Encapsulates interface-specific behavior so that methods are only accessible through their respective interfaces.
+
+Q. Composition & Aggregation & Association    -  (Is relationship, has-a relationship)
+	- Composition - is a PART-WHOLE releationship where both part and whole object have same lifetime 
+					ex - In case patient doctor and problems.
+					One can not stay without each other. Its like a death lelationship.
+	- Aggregation - the whole (part) (patient) does not own the child (part)(doctor). The child object can be shared with other objects.
+					There is no exclusive ownership.
+	- Association - Composition and Aggregation are subset of association.
+					Ex. independent class that is used in parent class.
+Q. Quartz.NET
+	- Open-source job scheduling system for .NET
+	- Can run embedded within an application or even instantiated as a cluster of stand-alone programs (with load-balance and fail-over capabilities
+	- Jobs are scheduled to run when a given trigger occurs, triggers support wide variety of scheduling options
+
+
+Q. Sprint Retrospective
+	- What worked well 
+	- What could be improved
+	- What will we commit to doing in the next sprint.
+	- Scrum team members make actionable commitments.
+	
+Q. Kubernetes
+	- Kubernetes is an open-source container orchestration platform for managing and deploying containerized applications.
+	- Key Features of Azure Kubernetes Service
+		- Fully managed Kubernetes cluster
+		- Automatic scaling & self-healing
+		- Integrated security with Azure Active Directory (AAD)
+		- Monitoring & logging with Azure Monitor
+		- Cost-effective (Pay for VMs only, control plane is free)
+	- KEDA - Kubernetes Event Driven Autoscaling
+Q. 	Async/Await	
+	- In C#, async and await are used for asynchronous programming, allowing non-blocking execution of code. 
+	This is particularly useful for I/O-bound operations such as database queries, API calls, file access, and other long-running tasks.
+
+Q. How to call multiple async api together inside  method
+	- To call multiple async APIs in parallel inside a method, use Task.WhenAll(). 
+	- This improves performance by executing all API calls concurrently instead of waiting for each one to complete sequentially.
+	
+	- Use Task.WhenAll(url1,url2,url3) for parallel execution (best performance).
+	- Use HttpClient.GetFromJsonAsync&lt;T&gt;() for automatic JSON deserialization.
+	- Handle exceptions with try-catch to prevent method failure.
+	- Use Task.WhenAny() when you only need the first completed response.
+	
+	Multiple asynchronous operations can be handled using Task.WhenAll and Task.WhenAny. 
+	WhenAll waits for all tasks to complete before continuing, while WhenAny waits for the first task to complete.
+	
+Q. Task Parallel Library (TPL)
+	- The Task Parallel Library (TPL) in C# is a framework that allows you to execute code asynchronously and in parallel 
+	  using tasks and data parallelism.
+	- Task-based parallelism – Uses Task and Task&lt;T&gt; for concurrent execution.
+	- Data parallelism – Uses Parallel.For, Parallel.ForEach to process collections in parallel.
+	- Asynchronous programming – Works seamlessly with async and await.
+	- Concurrency control – Uses CancellationToken and ConcurrentCollections.
+	- Task.WhenAll(task1, task2) ensures both tasks complete before proceeding.
+	
+	- Use Task.Run() or Task.Factory.StartNew() for background tasks.
+	- Use Task.WhenAll() to run multiple async operations concurrently.
+	- Use Parallel.For() & Parallel.ForEach() for parallel loops.
+	- Use ContinueWith() for sequential execution of tasks.
+	- Use CancellationToken to cancel long-running tasks.
+	- Use ConcurrentCollections to handle shared data safely in multithreading.
+	
+	- TPL encapsulates multi-core execution, but thread have a signle core utilization.
+	- Second benifit of TPL is thread pooling.
+
+Q. Thread pool
+	- ThreadPool is a collection of threads that can be reused to perform no. of tasks in the background.
+	  Now when a request comes, then it directly goes to the thread pool and checks whether there are any free thread available or not.
+	  If available it takes the thread object from the thread pool and executes a task.
+	- Once the thread completes its task then it again sent back to the thread pool so that it can reuse. 
+	  This reusability avoids an application to create the number of threads and this enables less memory consumption.
+
+Q. Azure Data Factory triggers
+	- Data factory pipeline run can be triggered by 
+		- Schedules
+			- When creating a schedule trigger, you specify a schedule (start date, recurrence, end date etc.) for the trigger, and associate with pipeline.
+			- Pipeline triggers have a many-to-many relationship. Multiple trigger can kick off a single pipeline. A single trigger can 
+			  kick off multiple pipelines.
+		- Tumbling windows
+			- Tumbling triggers are a type of trigger that fires at a periodic time interval from a specific start time, while retaining state.
+			- Tumbling windows are a series of fixed-sized, non-overlaping, and continuous time intervals.
+			- A tumbling windows trigger has a one-to-one relationship with a pipeline and can only reference a singular pipeline.
+		- Events based triggers
+			- Data integration scenarios often require data factory customers to trigger pipelines based on events such as the arrival 	
+			  or deletion of a file in your Azure Storage Account.
+			- Data factory is now integrated with Azure Event Grid, which lets you trigger pipelines on an event.
+		- Manually
+			- All pipelines can be manually triggered either via user interface or REST API (or Logic Apps)
+			
+	
+
+Q. Service Principle 
+	- An application account that you can use instead of your personal one. An Azure Service Principal is an identity created for use with 
+	  applications, services, and automation tools to access Azure resources.
+	  It's a security identity that allows you to authenticate and authorize your application to specific resources and services without 
+	  requiring a human user identity. 
+	
+Q. Containers
+	- A standarized unit of software.
+	- A container is a standard unit of software that packages up code and all its dependencies so the application run quickly and reliably 
+	  from one computing environment to another.
+	- Azure container instances 
+		- Azure container instances offers the fastest and simplest way to run a container in Azure, without having to provision 
+		  any virtual machines and without having to adopt a higher level service.
+Q. Azure Cosmos DB 
+	- Azure Cosmos DB is a fully managed NoSQL and relational database service for building scalable, high performance applications.
+	- Azure Cosmos DB  is a globally distributed and highly responsive database in the cloud. With just few clicks you get multiregional distribution 
+	  and redundancy with a high availibility of 99.999%.
+	- Key features
+		- turnkey global distribution - transparent multiregional distribution'
+		- Regional presence - available in 54+ regions
+		- Always on - 99.999% availability for read and writes
+		- Elastic scale - from thousands to hundreds of millions of requests/sec
+		- Low latency guarantee -under 10ms read/write for 99th percentile
+		- Consistency options - choose the right balance between performance and consistent replication.
+		- No schema for index management - designed as schema agnostic
+		- Multiple APIs	
+			- SQL (a core API)
+			- Cassendra
+			- mongo DB 
+			- Gremlin(Graphs)
+			- Azure table storage
+		- Planate scale, multiapi support, json format data
+		- Database -> Collection -> Document/Items
+Q. Parquet files
+	- Parquet is an open-source, columnar storage file format designed for efficient data storage and retrieval, particularly for big data analytics, 
+	  offering improved compression and faster query performance compared to row-based formats like CSV or JSON.
+
+Q. Design Patterns - 
+	- Design patterns are time tested solution for recurring architecture problems.
+		- Adapter - Helps too make incompatile interface compatible.
+					- The Adapter Pattern allows objects with incompatible interfaces to collaborate.
+					- It acts as a bridge between two incompatible interfaces.
+		- Repository - Helps to abstract and centralize the data access logic in an application. It provides a layer of seperation 
+					  between the application's business logic and data access code, making code make more modular, maintainable, and testable.
+					- Acts like an abstract layer between models data access technologies like EF, ADO.NET and so on.					  
+		- UOW(Unit of Work) - This pattern helps to manage transactions and changes made to objects. It goes with repository pattern well.
+			   - We all know we use FOR EACH so much so the next pattern is also very much used. One important point to note here 
+			     talk about IEnumerator and IEnumerable as they implement iterator bydefault.		
+			   - Help to manage transaction between repository.
+		- Factory - Responsible to create centralize objects. From creational pattern this is most used one. 
+				  - Creates an instance of several derived classes. Used when third party components are used.
+		- Iterator  - Help iterate over elements of aggregate object sequencially without exposing the underlaying representation of the object.
+		- Singleton  - Helps to create a single instance of an object.
+						- use case in caching of data like countries, states, currencies and so on.
+						- Global sharing of data like common themes, hit counter and so on.
+						- Singleton Pattern = static + thread safety + Lazy loding + performance
+						- 
+		- CQRS	- Shows the Command Query Responsibility Segregation approach.
+				- Command Query Responsibility Segregation separates read and write operations
+					into different models, optimizing performance, scalability, and security.
+		- Template pattern - define a skeleton of the algorithm in parent class and let sub class override specific steps.
+							- Defer the exact steps of an algorithm to a sub class.
+							- Extraction
+							- Transformation
+							- Loading
+		- Facade - Represents subsystem in a simplified way.
+		- Decorator pattern - Add behavior dynamically.
+		- Composite - A tree structure of simple object and composite object.
+Q. Architecture Style vs Architecture Pattern vs Design Patttern
+	- Architecture Style represents a set of principles or guideline that
+		shape the overall structure and oraganization of software system Ex. REST, SOA
+	- Architecture pattern provides general structures / layers for designing software system. Ex. MVC, Layered Architecture, MVVM.
+	- Design pattern is solution for recurring problems in software design. And it has a very clear context. Ex. Factory Pattern, Reposity
+
+Q. IEnumerable vs IEnumerator
+	- IEnumerable does not remember cursor state
+	- IEnumerable remember state
+Q. Differed execution in linq
+	- Deferred execution in LINQ means that a query is not executed immediately when it is defined. 
+	  Instead, it is executed only when the data is actually accessed.
+Q. Class can be made immutable while removing set from property of class like public string FirstName{get;}
+Q. Yield
+	- Custom iteration
+	- Stateful iteration
+	- Custom iteration without temp collection.
+Q. Var keyword
+	- var can be used in linq because we dont know what type is comming.
+	- var is used when right hand side is annominus type.
+	- var is used when we dont know what kind of data type comming from right side.
+Q. Extension Methods
+	- Extension methods allow you to add new methods to existing classes or interfaces without modifying their source code.
+
+Q. Static vs Singleton
+	- Static is a language keyword while singleton is a design pattern.
+	- If make a class static you can not implement interfaces, can not inherit and so on.
+	- When you make class static, object is created in the first call itself without giving you option of when to load and when not.
+	  Second you should also make sure its thread safe as its global object.
+Q. Thread safety in singleton design pattern
+	- C# lock keyword helps to implement thread safety.
+	- Whateven code is in the scope of lock keyword will get executed by only ONE thread at time avoiding any thread unsafe situation.
+	- By using LAZY keyword we can make the code size smaller. lazy makes code thread safe and also does the late initialization.
+
+Q. The Microsoft identity platform implements the OAuth 2.0 authorization protocol. 
+	- OAuth 2.0 is a method through which a third-party app can access web-hosted resources on behalf of a user
+Q. Kestrel 
+	- Kestrel is the default web server used in ASP.NET Core applications. 
+		It is a cross-platform, high-performance web server that is optimized for handling HTTP requests. 
+		By default, ASP.NET Core applications use Kestrel,
+	- Benifits
+		- High Performance - Kestrel is built on libuv (earlier versions) and Sockets API (newer versions), making it highly optimized for handling a large number of concurrent connections.
+		- Cross-Platform Compatibility - Kestrel runs on Windows, Linux, and macOS, making it ideal for deploying ASP.NET Core
+		- Asynchronous and Scalable - Kestrel is fully asynchronous, which helps in handling multiple requests efficiently.
+		- Lightweight and Embedded - Kestrel is embedded within the application, reducing dependencies on external web servers.
+		- Security Enhancements - Kestrel supports HTTPS, TLS, and WebSockets, ensuring secure communication.
+								- It can be used behind a reverse proxy (IIS, Nginx, Apache) for additional security and load balancing.
+		- 
+	
+
+Q. Reverse Proxy
+	- A reverse proxy is a server that sits between clients and backend servers, 
+		forwarding client requests to the appropriate backend server and returning responses to the client.
+	- Advantage
+		- Security
+			- Hides the backend server's IP address and architecture.
+			- Protects against DDoS attacks, SQL injections, and XSS attacks.
+		- Load Balancing
+			- Distributes incoming traffic among multiple backend servers.
+			- Prevents server overload and improves availability.
+		- Performance Optimization
+			- Enables caching of static content (CSS, JS, images).
+			- Supports gzip compression to reduce response size.
+		- Logging & Monitoring
+			- Centralized logging of all incoming requests.
+			- Useful for tracking errors and monitoring traffic. 
+
+Q. Globalization and Localization in .NET Core
+	- Globalization and localization in .NET Core allow applications to support multiple languages, cultures, and regional settings to reach a global audience.
+	- Globalization: Designing an application to support multiple languages and regions.
+	- Localization: Translating the application’s UI and content based on the user’s culture.
+	
+	- Globalization in .NET Core allows culture-aware formatting of dates, numbers, and currencies.
+	- Localization uses resource files (.resx) and IStringLocalizer&lt;T&gt; to support multiple languages.
+	
+Q. Facilitating Microservices-Based Applications with .NET Core
+	- .NET Core is an excellent choice for building microservices-based applications due to its cross-platform support, lightweight architecture, high performance, and scalability. 
+	- Key Components of a .NET Core Microservices Architecture
+		- API Gateway- Manages client requests and routes them to appropriate microservices.
+					 - Implements authentication, rate limiting, caching, and logging.
+		- Service Communication
+					- Synchronous (RESTful APIs)
+					- Asynchronous (Event-Driven using Message Brokers) - RabbitMQ, Kafka, Azure Service Bus for decoupled communication.
+		- Containerization with Docker
+		- Resilience & Fault Tolerance - Implement Circuit Breaker & Retry Policies using Polly.
+		- Distributed Logging & Monitoring - Serilog, ELK Stack (Elasticsearch, Logstash, Kibana), and Prometheus-Grafana for logging & monitoring.
+		- API Security - Secure microservices using JWT (JSON Web Token) authentication with IdentityServer4 or Azure AD.
+Q. WebSocket
+	- WebSocket is a communication protocol that provides full-duplex communication channels over a single TCP connection.
+	- Unlike traditional HTTP requests, WebSockets allow continuous, real-time communication between the client and server without repeatedly opening new connections.
+	- key feature
+		- Persistent Connection: Keeps the connection open for real-time communication.
+		- Low Latency: Eliminates the overhead of frequent HTTP requests.
+		- Bi-directional Communication: Both client and server can send messages anytime.
+			
+Q. Kafka 
+		- Apache Kafka is a distributed event streaming platform designed to handle high-throughput, fault-tolerant data streaming and message processing. 
+		- It allows systems to produce, store, and consume streams of events in real-time, making it ideal for building data pipelines and event-driven architectures. 
+		  Kafka is widely used for use cases like real-time analytics, log aggregation, and microservice communication.
+
+Q. SignalR
+			
+Q. Reflection
+	- Reflection is ablility of inspecting an assemblies metadata at runtime. It is used to find all types in an assembly and/or dynamic invoke methods in assembly.
+	Usages -
+		- when you drag and drop windows forms or asp .net application. The properties windows used reflection to show all props.
+		- Late binding can be achieved by using reflection. You can use reflection to dynamcally create an instance of type, 
+			about which we dont have any information at compiletime.
+		- Reflection is commonly used for implementing advanced features such as dependency injection, dynamic code generation, searialization.
+Q. Covariant and controvarience 
+	- There are type compatibility rules that allow you to assign a more derived (covarient) or less derived (controvarient) generic type argument 
+	  to a generic type parameter that is used in a delegate, a method, a class or an interface.
+	- Covariant and controvarient allow you to write more flexible and expressive code whenworking with generic types.
+		
+	
+
+Q. Memory Leaks 
+	- Ensure that you are releasing all resources properly and that you are not holding onto objects longer than necessary. 
+		Use memory profiling tools (see below) to identify potential memory leaks.
+
+Q. Batching 
+	- Batching in Entity Framework Core (EF Core) is a performance optimization technique where multiple 
+	  SQL commands (INSERT, UPDATE, DELETE) are grouped together and executed as a single database round trip 
+	  instead of executing each command separately.
+	- Reduces the number of database round trips → Improves performance.
+	- Optimizes bulk operations → Efficiently handles multiple inserts, updates, and deletes.
+	- Improves transaction efficiency → Reduces overhead in large-scale applications.
+	- AddRange(), UpdateRange(), RemoveRange(), SaveChanges() is example of batching
+
+Q. Rate limiting
+	- Rate limiting is a strategy for limiting network traffic
+	- Rete limiting can help us to stop kinds of malicious bot activity.
+	- It can also reduce strain on webserver.
+	
+Q. Handling Configuration in .NET Core Applications
+	- appsettings.json			- Default configuration file (key-value pairs)
+	- Environment Variables		- Override settings per environment
+	- Command-line Arguments 	- Pass settings when running the application
+	- User Secrets				- Store sensitive data securely in development
+	- Database or External Providers  - Load configuration from a database, Azure Key Vault, etc.
+	
+Q. Explain how dependency injection is implemented in .NET Core and why it's considered a best practice.
+	- Dependency Injection (DI) is a design pattern and a core feature of ASP.NET Core, used for managing dependencies in an application. It helps in achieving loose coupling, testability, and better maintainability.
+	-✅ Reduces Coupling – Classes do not depend directly on concrete implementations but on abstractions (interfaces).
+	-✅ Improves Testability – Makes it easier to unit test components by injecting mock dependencies.
+	-✅ Enhances Maintainability – Dependencies are managed in a centralized way, reducing code duplication.
+	-✅ Supports Configuration Management – Dependencies can be easily swapped or modified from a single location.
+	Three types of dependency injection	
+		- Property Injection
+		- Method Injection
+		- Constructor Injection
+
+Q. Background Jobs
+	- Backgorundservice
+	- IHostedService
+	- Hangfire
+	- Cronjobs
+	
+Q. Cronjobs 
+	- A cron job is a scheduled task that runs automatically at specified time intervals. 
+	  It is commonly used in Linux systems and cloud services (like Azure Functions, AWS Lambda, and Kubernetes) to execute scripts, data backups, API calls, or maintenance tasks.
+Q. Handle deadlock
+	- lock -  A lock is a basic synchronization mechanism that allows only one thread to access a shared resource at a time. 
+			- It is commonly used in critical sections to prevent race conditions.
+	- Mutex - A mutex is similar to a lock but can work across multiple processes. 
+			- It allows only one thread or process to access a resource at a time.
+	- Semaphore	- A semaphore controls access to a resource by allowing multiple threads (but a limited number) to access it concurrently. 
+				- It is used when multiple instances of a resource can be accessed but with a limit.
+
+	✅ Use lock when you need a simple, thread-safe operation within a single process.
+	✅ Use Mutex when you need inter-process synchronization.
+	✅ Use Semaphore when you want to allow a limited number of threads to access a resource.
+
+Q. Rest guidelines
+	- Seperation of client and server - Implementation of client and server must be done differently.
+	- Stateless -  Server will not store anything about the latest HTTP request the client made. It will treat every request as new request.
+	- unifirm interface - Identify the resource by url
+	- Cachable - The API request resonse should cachable to improve performance.
+	- Layered System - The system should follow layered pattern. For example MVC.
+Q. Distributed Caching -
+	- Distributed caching is a technique where cached data is stored across multiple servers or nodes, rather than a single machine, 
+	  allowing for greater scalability, fault tolerance, and improved performance in large-scale applications. 
+	  -Key Concepts
+				: Scalability
+				: Fault Tolerance
+				: Load Balancing
+				: Performance
+				: Data Replication 
+ 
+Q. DotNet Core features	
+	-builtin Support for Dependency Injection
+	-builtin Support for logging
+	-Fast and cross platform server
+	-Command line support for creating building and tunning application.
+	-its good support for asynchronous programming
+	-There is no web.config file it has appsetting.json
+	-Rate limit and minimal api
+Q. What is meta packages
+	-.Net core introduced Metapackages which includes all supported packages by ASP.Net code with their dependency in one packages
+	-It helps to fast development as we don't require to include individual ASP.NET Core packages.
+	-the assembly Microsoft.Netcore.All is metapackage provided by ASP.NET Core.
+Q. Configure method in .NET Core
+	-It defines how the application will respond to HTTP request.
+	-We can configure the request pipeline by configuring the middleware.
+	-It accepts IApplicationBuilder as a parameter and also two optional parameters: IHostingEnvironment and ILoggerFactory
+	-Using this method, we can configure built-in middleware such as routing, authentication, session etc. as well as third party middleware.
+Q. Minimal API
+	-Minimal apis are architected to create HTTP APIs with minimal dependencies.
+	-They are ideal for microservices and apps that want to introduce only minimal files, features and dependencies in ASP.NET Core.
+	-Its introduced in .NET Core 6.0
+Q. SSO providers
+	- Oauth
+	- SAML
+	- OpenID Connect
+	
+Q. Choosing the Right SSO Approach
+	- For modern web & mobile apps → Token-Based SSO (OAuth 2.0 + OpenID Connect)
+	- For enterprise/corporate environments → SAML or Kerberos.
+	- For cross-organization authentication → Federated SSO.
+	- For legacy systems within the same domain → Cookie-Based SSO.
+	
+Q. HashSet & HashMap
+	- Hashset - HashSet is an implementation of Set Interface which does not allow duplicate value.
+			  - The C# HashSet is a hash-based collection that allows only distinct elements.
+	- HashMap - Hashmap is an implementation of Map Interface, which maps key to value. Duplicate keys are not allowed in a map.
+			  - A HashMap is a data structure used for storing data in key-value pairs.The hashmap data structure uses HashTable for storing data.
+
+Q. Idempotency
+	- Idempotent operations produce the same result even when the operation is repeated many times.
+Q. Identity in .Net core
+	-Identity is a feature of .Net core that provides a way to hanlde authentication and authorization for web applications.
+	 It allows you to easily add support for user registration, login and password management to your application.
+	-In .net core, identity is implemented using Identity library, 
+     which provides a set of classes and interfaces for handling user identities and roles.
+Q. Background tasks
+	- In .Net core, background tasks can be implemented using IHostedService interface, which allow you to create a service that 
+	  runs in the background when the application starts.
+	
+
+Q. DotNet 9, C# 13
+	- Typed Results (Internal Server Error)
+	- OpenApi in place of swagger
+	- Hybrid cache - Replace in-memory and distributed cache
+	  Hybrid cache store data in in-memory and distributed both
+	  Hybrid cache provides a scalable and performant way of caching data
+	- Pushed Authorization Request (PAR) is default behaviour of .net core 9
+	  OpenID connect middleware uses PAR default as .NET 9
+	- app.MapStaticAssets()
+	- [Authorize] check warning over [AllowAnnominous]
+	- Dotnet aspire dashboard
+	- Base64Url.EncodetoString()
+	- Span as Alternate Lookup
+	- Feature switch off - code will be removed from binary
+	- Extension methods for spans
+	- Span StartWith and EndsWith
+	- Field keyword
+	- Lock object
+	- param collection
+	- Overload Resolution Priority
+	- Implement index access
+
+Q. API versioning
+	- URL Path Versioning - Most commonly used, clear separation of versions.
+	- Query String Versioning - Simple but not always RESTful.
+	- Header Versioning		  - Keeps URLs clean but less visible to clients.
+	- Media Type Versioning	  - Uses Accept header for flexible version control.
+
+Q. Async and Await
+	- Async and await are keywords used to enable asynchronous programming
+
+Q. Delegate	
+	- Delegate is a pointer to a function and very usefull as callbacks to communicate between threads.
+	
+Q. Events
+	- Events a are encapsulation over delegate
+Q. Examples of 400 errors
+	- 400 Bad Request
+	- 401 Unauthorized
+	- 403 Forbidden
+	- 404 Not Found
+Q. JWT token ClockSkew
+	- ClockSkew - it takes buffer of 5 minutes by defaut after expiration of token.
+	- To make token expires immediatly after expiration time need to make ClockSkew to Timesan.Zero;
+	
+Q. Garbage Collection 
+	- Its a background process which runs undetermestically and cleans unreferenced managed object from memory.
+Q. Performance Counter
+	- Performance counters are counters or they are measures of events in a software which allows us to do analyssis.
+	  These counters are installed when software is install.
+Q. Memory leaks
+	- Memory leak is a situation where the memory consumed by the application is not returned back to the OS when the application exits.
+Q. How to detect memory leak 
+	- Total memory of .NET = Unmanaged + Managed
+	- If you jus see total memory increasing and managed  is in range then it means memory leak in unmanged memory. 
+Q. When will you use weak reference 
+	- Caching, Object Pooling. Whereever object creation process is resource intensive caching and pooling can improve performacne.
+
+Abstract vs Interface
+Delegate vs Events
+Stored Procedure vs function
+Primary key Unique Key
+Static vs Singleton
+Ref vs out
+Clustered vs not clustered
+String vs StringBuffer
+Boxing vs unboxing
+IEnumerable vs IQueryable
+Delete vs Truncate
+Thread vs Task
+Constant vs Readonly
+== vs Equal
+Overloading vs Overriding
+		Overloading - Allows multiple methods with the same name but different parameters (type, number, or order).
+					- Occurs within the same class.
+					- Resolved at compile-time.
+		Overriding  - Allows a derived class to provide a new implementation for a method from the base class.
+					- Requires inheritance and virtual & override keywords.
+					- Resolved at runtime using dynamic dispatch.
+
+var vs Dynamic
+		var 		- The compiler infers the type at compile-time.
+					- Once assigned, the type cannot change
+					- Type safety is ensured at compile-time.
+					- Faster (optimized at compile-time)
+		dynamic		- The type is resolved at runtime (not compile-time).
+					- Can change types dynamically.
+					- No compile-time type checking (errors occur at runtime).
+					- Slower
+Union vs Union All
+		Union takes distinct rows
+		Union all takes duplicate elements as well
+Lazy vs Eager loading
+			Lazy 	- Data is not loaded immediately; it is loaded only when accessed.
+					- Helps reduce initial data retrieval time.
+					- Data Loaded when needed
+			Eager 	- Data is fetched immediately along with the main entity.
+					- Uses Include() to load related entities in a single query
+				  
+Array vs ArrayList	
+			Arrays - Fixed Size, Primitive and Object Types,
+			ArrayList - Dynamic Size, Object Types Only
+Encapsulation vs Abstration
+				Encapsulation - Encapsulation is the process of hiding data within a class and restricting direct access to it.
+							  - It is achieved using access modifiers (private, protected, public).
+				Abstraction	  - Abstraction focuses on hiding implementation details and exposing only the necessary functionality.
+							  - It is achieved using abstract classes and interfaces.
+							  - Reduces complexity by showing only essential details.
+							  - Separates implementation from the interface.
+							  - Allows flexible and scalable code.
+				
+Concurrent vs Parallel - Concurrency focuses on managing multiple tasks at once, 
+						 while parallelism focuses on executing multiple tasks simultaneously.
+Temp table vs CTE	-  CTEs (Common Table Expressions) and temporary tables are both SQL constructs for storing temporary data, 
+						but CTEs exist only within the scope of a single query, 
+						while temporary tables persist for the duration of a session or until explicitly dropped.
+Normal collection vs Genrics
+					- Normal collection 
+							- Non-generic collection that stores elements as object type.
+							- Requires boxing & unboxing, leading to performance overhead.
+							- No type safety (runtime errors possible).
+							- Example of a Normal Collection (ArrayList, HashTable)
+					- Generic Collection
+							- Type-safe: Only stores a specific type (e.g., List&lt;int&gt; stores only int values).
+							- No boxing/unboxing, improving performance.
+							- Available under System.Collections.Generic.	
+		
+Struct vs class 	- A class can inherit from other classes, but a structure cannot. In other words, a class can be derived from another class, but a structure cannot be.
+					- A structure is a collection of variables of different data types under a single unit.
+					- A class is a user-defined blueprint or prototype from which objects are created.
+Filter vs Middleware
+				-Middleware - Execution Level -(Global (applies to all requests))
+							- Scope - Works on the entire request pipeline
+							- Use Case - Logging, authentication, exception handling
+							- Configuration - Registered in Program.cs
+				- Filter 	- Execution Level - Controller & Action level
+							- Scope - Works within MVC/Web API pipeline
+							- Use Cases - Authorization, validation, action modification
+							- Configuration - Used with [Attribute] or globally in AddControllers()
+Property vs variable
+				- Property - Encapsulated member with get and set accessors	
+						   - Provides controlled access (read/write)	
+						   - Used to expose fields safely	
+						   - Can have get (read) and set (write) methods	
+						   - Can return calculated values	
+						   - It can use Can Use Logic
+						   - Public, private, protected, internal
+				- variable - Directly stores a value in memory
+						   - No access control mechanisms
+						   - Stores data inside a class
+						   - No access modifiers within its scope
+						   - Always stores a single value
+						   - this can not use logic
+						   - Private, local, instance, or static
+Throw vs Throw ex
+				- throw    - Preserves Stack Trace
+						   - Re-throws Original Exception
+						   - Keeps original exception details
+				- throw ex - does not have above infrmation
+			
+using statement - Ensures proper cleanup of unmanaged resources (e.g., file streams, database connections).
+				- Prevents memory leaks by calling .Dispose() automatically.
+				- Improves code readability and maintainability.
+				- using Directive
+				- using Statement
+Generic  - Generic is a class which allows the user to define classes and methods with the placeholder.
+
+
+
+
+
+Horizontal Scaling: Add more webservers to the pool.
+Vertical Scaling: Add more ram, CPUs
+Types of Sharing- hased, range-baased, directory based, vertical, horizontal, geo sharding.
+
+Assisting the auditor 
+Balance 
+Review machanism 
+Adding cmmentry 
+
+
+.net core 
+azure	
+sql server
+react
+unit test cases
+run unit test cases
+
+Engineering processes 
+Branching Starategies
+
+code analysis
+Sonar Qube 
+resharper 
+
+
+
+What are the primary benefits of using Azure Cloud? 
+How do you implement agile, methodologies, in an Azure devops environment? 
+Can you explain the CI / CD pipeline in Azure devops? 
+What are some key features of the Azure portal? 
+What are some best practices for securing your resources in azure?
+
+Q. Monitor and troubleshoot issues in an Azure environment. 
+	-You can use Azure monitor to collect and analyze metrics and logs and you can use Azure alerts to receive notifications about potential problems. Would you like to continue with the practice questions?
+	-You can manage and deploy resources in Azure using infrastructure as code with tools like Azure resource manager, templates, bicep, or terraform these tools. Allow you to Define your infrastructure and code and manage them in a version controlled, and repeatable way, would you like to continue with another question?
+
+Q. How do you ensure the security of your data in Azure storage?
+	You can use encryption both in transit and at rest, you can also Implement Access Control mechanisms like Azure active directory 
+	and shared access signatures and enable logging and monitoring to detect any suspicious activity. 
+
+Q. How can you use Azure key Vault to manage secrets and keys?
+	Vault involves several key aspects you can rotate Secrets, which is a best practice for security. 
+	You can also control who has access to those Secrets using access policies. 
+	You can also version Secrets which helps with tracking changes over time
+Q. Rotating a secret -	Rotating a secret means generating a new value for the secret and updating the applications that use it to use the new value. 
+		This is a security practice to reduce the risk of Secrets being compromised. 
+Q. Azure AD managed identity
+	- Azure AD Managed Identities are one of the best features when it comes to authentication across multiple Azure services. 
+	  They are secure, managed by Azure AD and incur no additional cost.
+	- Key characteristric
+		- Credentials are moved out of the application
+		- Identity created and ties with the resource lifecycle
+		- One click/command to setup with no additional cost-Pay
+		- Managed identities are Service PRINCIPLES of special type.
+		- Formaly known as MSI (Managed Service Identity)
+	- Solving challenges
+		- Internal Endpoint
+		- No credentials in code
+		- Identity name is same as resource name
+		- Identity lifecycle ties to resource
+Logic apps -Azure Logic Apps is a cloud based service that enables you to schedule, automate workflows, integrate services, and connect cloud and on-premises 
+        applications without writing complex code. 
+		- It provides low-code no code solution for building enterprise workflow and business process automation.
+		Key features
+			-Workflow automation 
+			-Seemless Integration
+			-Event driven trigger
+			-No-Code/Low code development
+			-Sacalability and reliablility
+			-Secure and Compliant
+		Basic builing blocks of logic apps
+			-Triggers
+			-Actions
+			-Connectors
+			-Conditions and workflow
+			-Variables
+			-Error handling
+			-Monitoring and Logging
+ 
+		Use cases
+			-Automating Business Workflows (e.g., invoice approval)
+			-Integrating Azure Services (e.g., connecting App Service to SQL)
+			-Data Synchronization (e.g., sync data between SharePoint & Dynamics 365)
+			-Sending Notifications (e.g., Teams, Slack, SMS alerts)
+			-Processing IoT Data (e.g., trigger workflows from IoT sensors)
+			-ETL (Extract, Transform, Load) Operations (e.g., moving data from CSV to SQL)
+
+Q. Docker and Containers.
+	- Container
+		-A container is a lightweight, portable, and isolated runtime environment that allows you to run applications with all their dependencies 
+		 (code, libraries, configs) in a consistent way across different environments.
+	- Docker
+		-Docker is a containerization platform that allows you to create, manage, and deploy containers easily. It provides tools to package 
+		 applications into Docker images, which can be executed as Docker containers.
+Q. Load Balancing
+	- Load balancing is the process of distributing incoming network traffic evenly across multiple servers to improve performance, 
+	  availability, and fault tolerance.
+	- Types of Load Balancers in Azure
+		- Azure Load Balancer : Internal and external traffic within Virtual Machines (VMs)
+		- Azure Application Gateway : Web applications with SSL termination, WAF, and URL-based routing
+		- Azure Traffic Manager : Directing users to the best region for performance
+		- Azure Front Door : High-performance global load balancing with caching
+		- Azure API Management : Secure and optimize API requests
+Q. Azure API Management 
+	- Azure API Management (APIM) is a fully managed service that allows you to secure, monitor, and manage APIs at scale.
+	  It acts as an API Gateway to expose services to internal and external consumers.
+	- Azure API Management is a fully managed service that enables organizations to publish, secure, monitor, and analyze their APIs. 
+	  It offers functionalities like API gateway, developer portal, API versioning, caching, and documentation support. Developers can create, import,
+	  and manage APIs with ease, while also configuring policies for advanced access control, request/response manipulation, and rate limiting.
+	- Features 
+		- API Gateway – Centralized access control & routing
+		- Security – Authentication, rate limiting, and IP restrictions
+		- Monitoring & Analytics – Track API usage and performance
+		- Developer Portal – Self-service API documentation
+		- Policy Enforcement – Modify requests/responses without changing the backend
+Q. Difference between Load Balancing & API Management
+	- Load Balancing
+		- Distributes network traffic across multiple servers (VMs, App Services)
+		- Layer 4 (Transport Layer) – Works at TCP/UDP level
+		- Handles network-level traffic (incoming requests to backend servers)
+		- No built-in security, relies on backend servers
+		- No caching
+		- No rate limiting
+		- Cannot modify requests/responses
+		- Best Use Case - Load balancing VMs, App Services, or Kubernetes clusters
+	- API Management 
+		- Manages, secures, and monitors APIs
+		- Layer 7 (Application Layer) – Works at HTTP/HTTPS level
+		- Handles API-level requests (authentication, transformation, rate limiting)
+		- Provides authentication, authorization, and IP filtering
+		- Supports response caching for better performance
+		- Allows quota, throttling, and rate limiting
+		- Can modify API requests and responses
+		- Best use cases - Managing APIs securely with versioning & monitoring
+Q. Secure Azure Service Bus?
+	- Azure Service Bus is a fully managed message broker used for asynchronous messaging between services and applications.
+	- Since it handles sensitive data and critical communication, it must be properly secured to prevent:
+	- Unauthorized access, Data breaches, Message tampering, Denial of Service (DoS) attacks
+Q. Managed Identity
+	- Managed Identity is an Azure AD-backed identity assigned to an Azure resource (e.g., VM, Function, App Service) so that it can authenticate securely without storing secrets.
+	- System-Assigned Managed Identity
+		- Tied to a single Azure resource
+		- Created and managed by Azure
+		- Automatically deleted when the resource is deleted
+		- Ex. A Virtual Machine or Azure Function can be assigned a System-Assigned Identity to access a Key Vault without storing credentials.
+		      Since it's automatically managed by Azure, you don’t need to rotate secrets or manage credentials.
+	- User-Assigned Managed Identity
+		- Created as a separate Azure resource
+		- Can be assigned to multiple Azure resources
+		- Not deleted automatically when a resource is deleted
+		- Ex. A User-Assigned Identity can be shared across multiple services.
+		      If you want a Function App and a Virtual Machine to use the same identity for authentication, 
+			  you would use a User-Assigned Identity instead of creating separate System-Assigned Identities.
+
+Q. System assigned managed identity 
+	-A system assigned managed identity enables Azure resources to authenticate to cloud services (e.g., Azure Key Vault) without 
+     storing credentials in code. Once enabled, all necessary permissions can be granted via Azure role-based-access control. 
+	 The lifecycle of this type of managed identity is tied to the lifecycle of this resource. 
+	 Additionally, each resource (e.g., Virtual Machine) can only have one system assigned managed identity.
+Q. Authorize Azure Functions
+	- Use Function-Level Authorization Keys
+	- Use Azure AD Authentication (Recommended)
+	- Use Managed Identity for Service-to-Service Authorization
+	- Use API Management for Centralized Authorization
+Q. Handle bulk data response 
+	- Use Pagination (Recommended)
+	- Asynchronous Background Processing
+			User requests data, API triggers background process (e.g., Azure Function, Hangfire), Once ready, API provides the data asynchronously.
+	- Use Streaming (Response as Data Loads)
+			[HttpGet]
+			public async IAsyncEnumerable&lt;DataModel&gt; GetDataStream()
+			{
+				foreach (var item in _dbContext.BulkData.AsAsyncEnumerable())
+				{
+					yield return item;
+				}
+			}
+	- Optimize Database Queries
+Q. When to use Minimal APIs
+	-Microservices: When you need to build small, independent services with minimal dependencies. 
+	-Serverless Functions: When you want to deploy simple API functions to cloud platforms.
+	-Prototyping: When you need to quickly prototype an API with minimal setup. 
+	-When you want to reduce boilerplate code: Minimal APIs offer a more concise way to define APIs compared to traditional controllers.
+	
+Q. Ingress in Azure
+	- Ingress in Azure refers to incomming network traffic to an application or service. It is commonly used in Azure Kubernetes Services and 
+	  in azure networking to manage how external users or systems access internal applications.
+	- When to use ingress
+		- For kubernetes applications(use ingrss controller)
+		- For secure web apps & APIs (use application gateway with WAF)
+		- For global load balancing (use azure front door)
+
+Q. Dynamic Data Masking
+	- Dynamic Data Masking (DDM) in Azure is a security feature that helps protect sensitive data by masking it at the query level. 
+	  It ensures that unauthorized users see masked values instead of actual data, while authorized users can access the real data.
+
+Q. Ways to Authenticate APIs in .NET Core 
+	- Token-Based Authentication (JWT) ✅ [Most Common]
+	- OAuth 2.0 + OpenID Connect (OIDC) 
+	- API Key Authentication 
+	- Cookie-Based Authentication
+	- Windows Authentication
+
+Q. Avoid using known-vulnerable serialization formats like BinaryFormatter in .NET.
+
+Q. Security Tools and Technologies:
+
+	OWASP ZAP: Penetration testing tool.
+	Burp Suite: Web vulnerability scanner.
+	SonarQube: Code quality and security analysis.
+	Snyk: Dependency vulnerability scanning.
+	Azure Security Center/AWS Security Hub/Google Cloud Security Command Center: Cloud security management tools.
+	Open Policy Agent (OPA): Policy engine for authorization.
+	Key Vault (Azure)/AWS KMS/Google Cloud KMS: Key management services.
+
+Q. Examples of Insecure Design
+	- No Rate Limiting (DDoS & Brute Force Attacks)
+	- Missing Authorization Checks
+	- Business Logic Flaws
+	- Hardcoded API Keys & SecretsHardcoded API Keys & Secrets
+	- Lack of Multi-Factor Authentication (MFA)
+	
+
+Q. Consul vault 
+	- Using Vault as a centralized secret management, 
+	  you can simplify your Consul deployments and avoid secret sprawl across multiple Kubernetes instances.
+	- https://developer.hashicorp.com/consul/tutorials/operate-consul/kubernetes-vault-consul-secrets-management
+	
+
+Q. API Gateways with Ocelot
+	-Ocelot is basically a set of middleware that you can apply in a specific order.
+	-Ocelot is designed to work with ASP.NET Core only.
+	-https://learn.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/implement-api-gateways-with-ocelot#architect-and-design-your-api-gateways
+	-The UpstreamPathTemplate is the URL that Ocelot will use to identify which DownstreamPathTemplate to use for a given request from the client. 
+	 Finally, the UpstreamHttpMethod is used so Ocelot can distinguish between different requests (GET, POST, PUT) to the same URL.
+Q. BFF (Backend for Frontend)
+Q. Dependency Track 
+
+Q. .Net Records	
+	- Rference type like classes
+	- Quick to declare in one line
+	- Immutable
+	- Process faster then classes 
+	- Value-based comparison
+Q. Synchronous vs Asynchronous Programming
+	- In Synchronous programming,  the program waits for a task to complete before moving on to the next task.
+	- In asynchronous programming, the program can continue execute other tasks while waiting for a task to compelte. 
+	- Asynchronous task are commonly used in I/O-bound tasks, such as reading from DB or calling a web service.
+Q. Event and delegate 
+	- An event in c# is machenism for notifying subscribers that an action has occured.
+		- Events are commonly used for implementing observer pattern.
+	- Delegate is a type that represents a reference to a method with a specific signature. 
+		- Delegates are commonly used for implementing callback function and event handlers.
+
+Q. Shield class and Static class
+	- Shield class can not be inherited.
+		- Commonly used for preventing inheritence and for optimization. 
+	- Static call can not be instantiated and can only contain static memebers
+		- commonly used for utility classes and extension methods.
+Q. Constructure & Destructure
+	- Constructure is called when object state is created. commonly used for initializing object.
+	- Destructure is called when object is destryed or garbage collected. Destructure is rearely called because DC automarically free memory.
+Q. Attribute 
+	- Attribute is a type that provides metadata about an assembly, a type or a member.
+	- It is used to control how the runtime treats the annotated code, such as how it is searilized, validated and executed.
+	- It can also be used to add custom information to the code, such as authorship, or licencing information.
+	- Commonly used for cross-cutting concerns, such as logging, validating and security.
+Q. types of searilation
+	- XML, Binary, JSON searialization
+
+Q. C# important topics
+	- LINQ, Lembda Expression, Events, Delegates, Nullable Types, Generics, Exception Handling, Async/Await
+
+Q. DLLImport Attribute
+	- It helps to call unmaged code from managed code.
+Q. Reflection - It is used to get type definition at run time.	
+Q. Abstraction - Show only whats necessary.
+Q. Encapsulation - Hide complexity.
+
+Q. How to run conditional middleware in .NET?
+	-One powerful tool in the ASP .NET Core framework is app.UseWhen, allowing developers to conditionally apply middleware based on specific criteria.
+	 These are the benefits of this approach : 
+	 - Optimized Performance
+	 - Clean Code Organization
+	 - Selective Middleware Application
+	-app.UseWhen is particularly beneficial for applications with specific routing or processing needs.  
+	-While it may not be necessary for simpler applications, it can significantly enhance performance and organization in more complex scenarios.
+
+
+To learn--
+BurpSuit
+Symmetric and Asymetric Encryption
+hangfire on azure
+Toolify 
+
+
+SQL Server
+
+Q. CTE
+	- Common table expression (CTE) in sql server are used to create temperary result sets that can be referenced with in a Select, insert, update or 
+	  delete statements.
+	-Basic CTEs
+	-CTE with joins
+	-Recursive CTEs
+		WITH EmployeeHierarchy AS(
+			 SELECT Employees.EmployeeID, CONCAT(Employees.FirstName, Employees.LastName) AS FullName, 
+			 Employees.ManagerID, 
+			 1 AS Levels
+			 FROM Employees where Employees.ManagerID IS NULL
+
+			 UNION ALL	  
+
+			 SELECT e.EmployeeID, CONCAT(e.FirstName, e.LastName) AS FullName, 
+			 e.ManagerID,
+			 EmployeeHierarchy.Levels  + 1 AS Levels
+			 FROM Employees AS e 
+			 INNER JOIN EmployeeHierarchy on e.ManagerID = EmployeeHierarchy.EmployeeID
+			 )
+		SELECT EmployeeID,  FullName, ManagerID, Levels FROM EmployeeHierarchy order by Levels
+	-Using CTE for Pagination
+		WITH EmployeePage AS(
+		 SELECT Employees.EmployeeID, CONCAT(Employees.FirstName, Employees.LastName) AS FullName, 
+		 Employees.ManagerID, 
+		 Employees.Salary,
+		 ROW_NUMBER() OVER(ORDER BY Salary desc) AS RowNum
+		 FROM Employees
+		)
+		select * from EmployeePage where RowNum between 1 and 10
+	-CTE for Aggregation
+		WITH DepartmentSalary AS(
+		SELECT
+		DepartmentID, avg(Salary) AS AvgSalary
+		FROM Employees
+		GROUP BY DepartmentID
+		)
+		select AvgSalary, d.DepartmentName from  DepartmentSalary as ds join Departments as d on ds.DepartmentID = d.DepartmentID
+	-Multiple CTEs in One Query
+	-
+Q. Recursive query
+Q. OUTER APPLY vs CROSS APPLY
+Q. Pivote Table
+	- The PIVOT operator in SQL Server transforms rows into columns, aggregating data to create a cross-tabulation (or pivot table) of results.
+		SELECT Product, North, South, East
+		FROM
+		(
+			SELECT Product, Region, SalesAmount
+			FROM Sales
+		) AS SourceTable
+		PIVOT
+		(
+			SUM(SalesAmount)
+			FOR Region
+			IN (North, South, East)
+		) AS PivotTable;
+	Use Cases
+		- Data Summarization and Analysis
+		- Data Visualization
+		- Cross-Tabulation
+		- Data Transformation for Reporting
+		- Simplifying Complex Queries
+Q. Temp Tables
+Q. Transparent Data Encryption (TDE) in SQL Server
+	- Transparent data encryption is a security feature in SQL server that provides real-time encryption of data at rest.
+	  It encrypts database files .mdf and .ldf
+Q. How do you manage SQL Server security, including logins and users?
+	- Authentication Methods in SQL Server
+		-Windows Authentication - Uses Active Directory (AD) for login validation
+		-SQL Server Authentication - 
+	- Managing Logins and Users
+		-Creating a Login (Server-Level)
+		-Creating a Database User
+		-Granting Permissions to a User
+		-Dropping a User and Login
+	- SQL Server Roles
+		-Server-Level Roles
+		-Database-Level Roles
+	- Managing Permissions
+		-Granting Permissions
+		-Revoking Permissions
+		-Denying Permissions (Overrides GRANT)
+	- Row-Level Security (RLS)
+		-Creating a Security Predicate
+	- Auditing & Monitoring Security
+		-Viewing Active Logins	
+		-Viewing User Permissions
+		-Tracking Failed Logins
+	-Best Practices for SQL Server Security
+		-Use Windows Authentication whenever possible.
+		-Enforce strong passwords for SQL logins.
+		-Grant least privileges (Principle of Least Privilege - POLP).
+		-Disable the sa account or rename it.
+		-Enable SSL/TLS encryption for data in transit.
+		-Use Transparent Data Encryption (TDE) for data at rest.
+		-Implement Row-Level Security (RLS) where necessary.
+		-Regularly audit database users and permissions.
+		-Monitor login attempts using SQL Server audit logs.
+		-Restrict access to xp_cmdshell and other extended stored procedures.
+
+
+Q. Describe the process of upgrading SQL Server to a new version?
+	- Pre-Upgrade Planning
+		-Check SQL Server Version and Edition
+		-Verify Upgrade Paths
+		-Perform a Database Compatibility Check
+		-Take Full Database and System Backups
+		-Check Database Compatibility Levels
+	- Choose an Upgrade Method
+		-In-Place Upgrade (Recommended for Small Systems)
+		-Side-by-Side Migration (Recommended for Large Systems)
+	- Perform the SQL Server Upgrade
+		-Run SQL Server Setup
+		-Upgrade System Databases
+		-Reconfigure Linked Servers, Logins, and Jobs
+	- Post-Upgrade Tasks
+		-Update Database Compatibility Level
+		-Update Statistics and Rebuild Indexes
+		-Verify SQL Server Services
+		-Test Applications and Connections
+Q. What is SQL Server AlwaysOn Availability Groups, and how does it work?
+	- Sql Server AlwaysOn Availability group(AGs) is high-availability and disaster recovery feature introduced in SQL Server 2012.
+      It allows you to replicate one or more database across multiple Sql Server Instances (replicas), ensuring minimal downtime and
+	   automatic failover in case of server failure.
+
+Q. Explain the concept of database mirroring.
+	- Database mirroring is a high-availability disaster recovery feature in sql server that maintains a real time copy of database on another 
+	  sql server instance. It ensures automatic failover and minimal data loss in case of primary server failure.
+Q. High Availability in SQL Server
+	- AlwaysOn Availability Groups
+	- Failover Cluster Instances (FCI)
+	- Database Mirroring 
+	- Log Shipping
+	- Replication
+
+Q. COALESCE() Function
+	- The COALESCE() function returns the first non-null value from a list of expressions. 
+	  It is commonly used to handle NULL values and provide default values in SQL queries.
+	- COALESCE(expression1, expression2, ..., expressionN)
+	
+Q. CAST() vs. CONVERT()
+	- CAST - Converts data type
+	- CONVERT - Converts data type & formats date/time
+	
+Q. CONCAT function
+	- this is used to combine one or more string to a single string.
+	- It automatically handles null values, replacing them with empty ('') stirng.
+Q. STRING_AGG()
+	- The STRING_AGG() function is used to concatenate multiple values from a column into a single string, 
+	  with a specified separator. It was introduced in SQL Server 2017 and later.
+Q. Magic Tables
+	- "Magic Tables" are virtual tables automatically created in SQL Server for triggers.
+	- They store inserted and deleted records during DML operations (INSERT, UPDATE, DELETE).
+	- These tables are not physically stored but exist only during the execution of the trigger.
+
+Q. Temp Table vs. Global Temp vs Table Variables (@TableVar)
+	- Local Temp Table (#TempTable) 
+		- Available only to the session (SPID) that created it	
+		- Prefixed with # (e.g., #TempTable)
+		- Automatically dropped when the session ends
+		- Other sessions cannot access it	
+		- Storing temporary data in stored procedures or scripts	
+	- Global Temp
+		- Available to all sessions/users
+		- Prefixed with ## (e.g., ##GlobalTempTable)
+		- Exists until all sessions using it are closed
+		- Other sessions can access it
+		- Sharing temporary data across multiple sessions/users
+	- Table Variables (@TableVar)
+		- Unlike temp tables, table variables don’t store metadata in tempdb
+		- They exist only in memory and are faster for small datasets.
+		- Best for small, temporary datasets within a single batch or function.
+
+Q. Indexes in Sql
+	- Indexes are special lookup tables that need to be used by the database search engine to speed up data retrieval.
+
+Q. ACID
+	- Atomicity(All or Nothing) : Ensures that a transaction is fully completed or rolled back if any part fails.
+	- Consistency (Valid Data Only) :  Ensures that the database remains in a valid state before and after a transaction.
+	- Isolation (No Dirty Reads) : Ensures that concurrent transactions do not interfere with each other.
+	- Durability (Data is Permanent) : Ensures that once a transaction is committed, it is permanently saved (even after system failure).
+ 
+Q. Triggers
+	- A trigger is a special type of stored procedure that automatically executes when a specific event occurs in a database.
+	- Types of Triggers
+		- DML (Data Manipulation Language) Triggers
+			-AFTER (default) – Executes after INSERT, UPDATE, or DELETE.
+			-INSTEAD OF – Replaces the action of INSERT, UPDATE, or DELETE.
+			-Works on tables & views.
+		- DDL (Data Definition Language) Triggers
+			-Fires when CREATE, ALTER, or DROP is executed on a database object.
+		- LOGON Triggers
+			-Fires when a user connects to SQL Server.
+ 
+Q. Magic Tables
+	- "Magic Tables" is not an official SQL Server term, but it refers to the INSERTED and DELETED tables 
+	   used internally in triggers to store temporary data during INSERT, UPDATE, and DELETE operations.
+
+Q. Stored Procedure
+	- Executes a set of operations (DML, transactions, etc.)
+	- Can return multiple result sets or no result
+	- Cannot be used in SELECT directly
+	- It can modify data
+	- Can use transactions (BEGIN TRAN, COMMIT, ROLLBACK)
+	- Can call other stored procedures or functions
+	- Can be optimized with execution plans
+	- Supports TRY...CATCH
+	- Return Multiple (via OUT parameters or multiple result sets)
+
+Q. Function 
+	- Returns a single value or a table
+	- Must return a value (scalar/table)
+	- Used in SELECT, WHERE, JOIN, etc.
+	- It can not modify data
+	- Can not start a transaction
+	- It can not call Stored Procedure
+	- Generally faster for computations
+	- No TRY...CATCH 
+	- Return Multiple Values (via Table-Valued Function)
+	
+Q. Types of Indexes
+	- Clustered Index : Stores data physically sorted in the table based on the index. Each table can have only one clustered index.
+	- Non-Clustered Index : Creates a separate index structure with pointers to the actual data in the table. A table can have multiple non-clustered indexes.
+	- Unique Index : Ensures that all values in a column are unique (like PRIMARY KEY).
+	- Composite Index : An index on multiple columns to optimize queries filtering on multiple fields.
+	- Filtered Index : Applies to only a subset of rows, reducing storage and improving performance.
+	- Full-Text Index : Used for fast text searches in large textual data.
+	- Spatial Index : imizes queries on geographical data types (used in GIS applications).
+	- XML Index	 : Improves performance of queries on XML data types.
+	
+Q. DBContext and DBset
+	- DBContext
+		- Acts as a session between the application and the database.
+		- Manages database connections, transactions, and queries.
+		- Provides methods like .SaveChanges() to persist data.
+	- DbSet&lt;T&gt;
+		- Represents a table in the database.
+		- Allows CRUD operations (Add(), Find(), Remove(), etc.).
+Q. lead and lag 
+	- These are window functions that allow you to access data from a different row within the same result set without needing a self-join.
+	- LAG(): "Looks backward". It accesses data from a previous row in your partition (group of rows) based on a specified order.
+	- LEAD(): "Looks forward". It accesses data from a subsequent (following) row in your partition based on a specified order.
+
+Q. Frame clauses
+Q. While working on Microservice below items to remember
+	- identify the domain
+		- Supportive Subdomain
+		- generic Sundomain
+		- Core domain
+	- Domain driven design
+		- Repository pattern
+		- Aggregate Root
+		- Event Sourcing 
+		- MediatR
+		- CQRS
+	- Database design
+		- Multi tanent Design
+		- Single DB Design
+		- Multi DB muti tanent
+		- Schema Multitanent
+	- Communication between microservice
+		- Synch communication
+		- Asynch communication
+		- Saga pattern 
+		- Queues
+		- WebAPI
+	- Security 
+		- OAuth, OpenID, openId Connection
+		- Single Sign on approach
+		- Refresh Token
+		- JWT token
+
+
+
+API Performance
+ 1. Pagignation
+		- Instead of returning massive datasets in one go, break the response into pages.
+		- Reduces response time and memory usage
+		- Helps when dealing with large datasets
+		- Keeps requests manageable for both server and client
+ 2. Asynchronous logging
+		- Logging is important, but doing it synchronously can slow down your API.
+		- Use asynchronous logging to avoid blocking the main process
+		- Send logs to a buffer and flush periodically
+		- Improves throughput and reduces latency
+ 3. Caching
+		- Why query the database for the same data repeatedly?
+		- Store frequently accessed data in cache (e.g., Redis, Memcached)
+		- If the data is available in cache → return instantly
+		- If not → query the DB, update the cache, and return the result
+ 4. Compress payload
+		- Large response sizes lead to slower APIs.
+		- Compress data before sending it over the network (e.g., Gzip, Brotli)
+		- Smaller payload = faster download & upload
+		- Helps in bandwidth-constrained environments
+ 5. Connection Pool
+		- Opening and closing database connections is costly.
+		- Instead of creating a new connection for every request, reuse existing ones
+		- Reduces latency and database load
+		- Most ORMs & DB libraries support connection pooling
+
+
+
+Q. How you use config method in .net core Entity framework in version 6/8
+	- Approach 1: Using Program.cs (Recommended for .NET 6/7/8)
+	- // Configure EF Core and DbContext
+		builder.Services.AddDbContext&lt;ApplicationDbContext&gt;(options =>
+		options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+	- Approach 2: Using OnConfiguring (Used in Console apps or fallback)
+	- 
+
+Q. How to upload large file in .net core using chunks concept
+	- Uploading large files using the chunking concept in .NET Core is a reliable and efficient approach to prevent issues like:
+	- Timeouts, Memory overflows, Interrupted uploads
+	
+Q. API response types
+	- Void - it returns empty content
+	- HttpResponseMessage - It will convert the response to an http message.
+	- IHttpActionResult - Internally calls ExecuteAsync to create an HttpResponseMessage 
+
+Q. SOAP vs API
+	- SOAP	- It is messaging protocol
+			- It work slower then REST
+			- It uses WSDL (Web Service Description Language) for communication
+			- It includes built-in error handling for communication errors using WS-Reliable Messaging specification
+	- REST  - It is basically architectural pattern 
+			- It works on various text formats such as plain text, xml, json etc.
+			- It works faster
+			- It uses XML and JSON for data communication
+			- It has to resend whenever it determines any errors.
+		
+		
+
+
+
+
+	
+	
+	
+
+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
+
+	
+
+
+Database Optimization
+
+
+oAuth, Openid protocol - to authenticate web apis
+
+To authenticate and add middleware for JWT
+servicess.AddMicrosoftIdentityWebApiAuthentication(Configuration)
+
+	IF DEBUG in c#
+	Azure Ingress
+	
+ 
+ Kunal Valecha (Intreview)
+ 
+ Azure Insights
+ Message queue , CQRS
+ 
+ IAM - Access control
+
+	
+	
+
+➡ 𝐂𝐥𝐞𝐚𝐧 𝐀𝐫𝐜𝐡𝐢𝐭𝐞𝐜𝐭𝐮𝐫𝐞
+➡ 𝐂𝐐𝐑𝐒 pattern for separating read and write operations
+➡ 𝐔𝐧𝐢𝐭 𝐨𝐟 𝐖𝐨𝐫𝐤 & 𝐑𝐞𝐩𝐨𝐬𝐢𝐭𝐨𝐫𝐲 𝐩𝐚𝐭𝐭𝐞𝐫𝐧𝐬
+➡ 𝐄𝐅 𝐂𝐨𝐫𝐞 & 𝐃𝐚𝐩𝐩𝐞𝐫
+
+🗄️ 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞 & 𝐂𝐚𝐜𝐡𝐢𝐧𝐠 𝐒𝐮𝐩𝐩𝐨𝐫𝐭
+
+➡ 𝐒𝐐𝐋𝐒𝐞𝐫𝐯𝐞𝐫 & 𝐏𝐨𝐬𝐭𝐠𝐫𝐞𝐬
+➡ 𝐑𝐞𝐝𝐢𝐬 for high-performance 𝐜𝐚𝐜𝐡𝐢𝐧𝐠
+
+🛠️ 𝐌𝐢𝐝𝐝𝐥𝐞𝐰𝐚𝐫𝐞 & 𝐄𝐫𝐫𝐨𝐫 𝐇𝐚𝐧𝐝𝐥𝐢𝐧𝐠
+
+➡ 𝐂𝐮𝐬𝐭𝐨𝐦 𝐌𝐢𝐝𝐝𝐥𝐞𝐰𝐚𝐫𝐞𝐬 for cross-cutting concerns
+➡ 𝐄𝐫𝐫𝐨𝐫 𝐇𝐚𝐧𝐝𝐥𝐞𝐫𝐬 for HTTP status codes (400, 401, 403, 404, 405, 409, 429, 501, 500)
+➡ 𝐁𝐚𝐬𝐞𝐑𝐞𝐬𝐮𝐥𝐭 pattern for uniform API responses
+➡ 𝐁𝐚𝐜𝐤𝐠𝐫𝐨𝐮𝐧𝐝 𝐏𝐫𝐨𝐜𝐞𝐬𝐬𝐢𝐧𝐠 & 𝐌𝐞𝐬𝐬𝐚𝐠𝐢𝐧𝐠
+➡ 𝐇𝐚𝐧𝐠𝐟𝐢𝐫𝐞 Jobs
+➡ 𝐑𝐚𝐛𝐛𝐢𝐭𝐌𝐐
+
+📊 𝐋𝐨𝐚𝐝 𝐁𝐚𝐥𝐚𝐧𝐜𝐢𝐧𝐠 & 𝐇𝐞𝐚𝐥𝐭𝐡 𝐌𝐨𝐧𝐢𝐭𝐨𝐫𝐢𝐧𝐠
+
+➡ 𝐘𝐀𝐑𝐏 for Load Balancing
+➡ 𝐇𝐞𝐚𝐥𝐭𝐡 𝐂𝐡𝐞𝐜𝐤𝐬
+➡ 𝐏𝐫𝐨𝐦𝐞𝐭𝐡𝐞𝐮𝐬 & 𝐆𝐫𝐚𝐟𝐚𝐧𝐚 for real-time monitoring
+
+🚀 𝐀𝐏𝐈 & 𝐀𝐮𝐭𝐡𝐞𝐧𝐭𝐢𝐜𝐚𝐭𝐢𝐨𝐧
+
+➡ 𝐌𝐢𝐧𝐢𝐦𝐚𝐥 𝐀𝐏𝐈𝐬 with the 𝐎𝐩𝐭𝐢𝐨𝐧𝐬 𝐩𝐚𝐭𝐭𝐞𝐫𝐧
+➡ 𝐉𝐖𝐓 𝐭𝐨𝐤𝐞𝐧𝐬 & 𝐎𝐀𝐮𝐭𝐡 for secure authentication and authorization
+
+🐳 𝐃𝐨𝐜𝐤𝐞𝐫 & 𝐃𝐞𝐯𝐎𝐩𝐬
+
+➡ 𝐃𝐨𝐜𝐤𝐞𝐫 support for containerization, with 𝐩𝐠𝐀𝐝𝐦𝐢𝐧 for database management
+➡ 𝐄𝐋𝐊 Stack with 𝐋𝐨𝐠𝐬𝐭𝐚𝐬𝐡, 𝐊𝐢𝐛𝐚𝐧𝐚, 𝐚𝐧𝐝 𝐄𝐥𝐚𝐬𝐭𝐢𝐜𝐬𝐞𝐚𝐫𝐜𝐡 for powerful logging and visualization
+➡ 𝐏𝐨𝐫𝐭𝐚𝐢𝐧𝐞𝐫 for easy Docker management
+
+📋 𝐒𝐰𝐚𝐠𝐠𝐞𝐫 & 𝐀𝐏𝐈 𝐌𝐚𝐧𝐚𝐠𝐞𝐦𝐞𝐧𝐭
+
+➡ Fully configured 𝐒𝐰𝐚𝐠𝐠𝐞𝐫 with 𝐬𝐞𝐜𝐮𝐫𝐢𝐭𝐲, 𝐞𝐱𝐚𝐦𝐩𝐥𝐞𝐬, 𝐚𝐧𝐝 𝐀𝐏𝐈 𝐯𝐞𝐫𝐬𝐢𝐨𝐧𝐢𝐧𝐠
+➡ 𝐑𝐚𝐭𝐞 𝐥𝐢𝐦𝐢𝐭𝐢𝐧𝐠, 𝐈𝐝𝐞𝐦𝐩𝐨𝐭𝐞𝐧𝐜𝐲, and 𝐟𝐞𝐚𝐭𝐮𝐫𝐞 𝐦𝐚𝐧𝐚𝐠𝐞𝐦𝐞𝐧𝐭 middleware
+
+📌 𝐀𝐝𝐝𝐢𝐭𝐢𝐨𝐧𝐚𝐥 𝐓𝐨𝐨𝐥𝐬 & 𝐏𝐚𝐭𝐭𝐞𝐫𝐧𝐬
+
+➡ 𝐂𝐮𝐬𝐭𝐨𝐦 𝐄𝐱𝐜𝐞𝐩𝐭𝐢𝐨𝐧𝐬 and 𝐏𝐚𝐠𝐢𝐧𝐚𝐭𝐢𝐨𝐧 Handlers
+➡ 𝐄𝐧𝐮𝐦 𝐋𝐢𝐬𝐭 𝐇𝐚𝐧𝐝𝐥𝐞𝐫𝐬 for better data management
+➡ Best practices in 𝐃𝐃𝐃 and 𝐎𝐎𝐏
+
+➡ 𝐄𝐧𝐜𝐫𝐲𝐩𝐭𝐢𝐨𝐧/𝐃𝐞𝐜𝐫𝐲𝐩𝐭𝐢𝐨𝐧 helpers, 𝐂𝐚𝐩𝐭𝐜𝐡𝐚 generator and much more!
+
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+      </code></pre>
+    </div>
+
+    <div id="day4" class="tab-content" style="display: none" role="tabpanel">
+      <pre><code>
+        React Interview questions
+ 
+ 
+Q. React
+	- Single page application
+	- Unidirectional
+Q props vs state
+	- props - readonly, parent to child
+	- state - internal to a component, state can be passed to children
+Q. Advantage of react
+	- Simple to build single page application
+	- React is cross platform and open source
+	- light weight and fast(Virtual DOM)
+	- large community and ecosystem
+	- Testing in ui in react (JEST )
+Q. Disadvantage of react
+	- React 
+		- React is a javascript library 
+		- React uses a virtual DOM which makes it faster
+		- React is smaler in size and lightweight and therefor faster sometime
+		- react depends on external libraries for many complex features, so developer has to write many lines of code for complex feature.
+		- react is simple to learn and more popular then Angular
+	- Angular 
+		- Angular is complete framework 
+		- Angular uses real DOM 
+		- Angular is bigger because it is compplete framework
+		- Sinc eangular is complete framework, therefore it provides built-in support for features like routing, forms, validation, and http requests.
+		- Angular is slightly difficult to learn as it has Typescript, OOPs concept andn many more things.
+Q. DOM
+	- The DOM(document object model) represents the web page as tree like structure whick allows javascript to dynamically access and manupulate
+	  content and structure of web page.
+Q. Virtual DOM 
+	- React uses a virtual DOM to efficiently update the UI without re-rendering entire page, which helps improve performance and make 
+	  the application more responsive.
+Q. React component
+	- In React, a component is a reusable building block for creating user interface.
+Q. What jsx
+	- JSX(javascript XML) is a syntex extension used by react to write HTML-like code.
+Q. Advantage of JSX
+	- Improve code readablity and writabiity
+	- Error checking in advance
+	- Support javascript expressions
+Q. Babel
+	- Babel in react is used to transpile JSX syntex into regular javascript which browser can understand.
+Q. Transpiler 
+	- It compiles code from one programming language to another
+Q. Optional chaining (?.)
+	object?.name - print undefuned in case name is not found in scope
+Q. Spread Operator
+	- Spread operator (...0 is used to expand or spread an array of object.
+Q. ES6 feature
+	- let, const 
+	- arro2 function
+	- Default Parameters
+	- Classes
+	- object destructuring
+	- array destructuring
+	- spread operator
+	- Promises
+	- Map 
+	- Set
+Q. Lexicographical comparision
+	- means comparing character by character unicode order
+Q. Conditional endering 
+	- if/else statement 
+	- ternary operator
+	- && operator
+	- switch statement
+Q. map & foreach
+	- map 
+		- It can eturn new array and do not modify existing array
+		- It can be chained 
+	- foreach 
+		- It simply iterates the array and does not return anything
+		- It can modify existing array 
+Q. null vs undefined
+	- null is a value
+	- undefined is not defined 
+Q. Event delegation
+	- We provide event listner to parent and access child element with the help of that event.
+Q. Function scope
+	- Variables defined into a function can not be accessed from anywhere out outside the function, because the variable is defined only 
+	  in the scope of the function. However, a funciton can access all variables and function defined inside the scope in which is defined.
+ 
+ 
+rest 	-  accept as pa combined paramaeter
+spread   - spread object and passed to a function 
+destructuring 	 - destructure all the properties in a individual variables
+
+-----------------------------------------------------------------------------------------------
+
+Q. Performance optimization
+	-Handling large datasets in React 
+		- pagination						-	Loads data in chunks instead of all at once.
+		- lazy loading	(Infinite Scroll)	- 	Loads more data only when needed.
+		- virtualized rendering(react-window) - 	Renders only visible items to improve performance.
+		- memoization (useMemo, useCallback) - Prevents unnecessary calculations and re-renders.
+		- debounce							- Prevents excessive API requests.
+	- Web Workers - Offloads heavy computations to background threads.
+	- React.memo - Avoids re-renders when props don’t change.
+
+  -----------------------------------------------------------------------------------------------
+
+  rest 	-  accept as pa combined paramaeter
+
+spread   - spread object and passed to a function 
+
+destructuring 	 - destructure all the properties in a individual variables
+ 
+Q. Flaten the array 
+
+	- Flaten means making nested(multilevel) array to single array.
+
+		let arr = [
+
+		[1,2],
+
+		[2,3,4,[9,30]],
+
+		[4,5,6,7]
+
+		];
+ 
+	-1 way - let flatenArray = [].concat(...arr)
+
+	-2 way - console.log(arr.flat(2))
+
+Q. var vs let vs const
+
+	- var is functional scope 
+
+	- let and const block scope
+
+	function a(){
+
+	for(var i=1;i&lt;5;i++){  
+
+	  (function(i){
+
+		setTimeout(()=>{  	
+
+		console.log(i)
+
+	  }, i * 1000)
+
+	  })(i)
+
+	  }
+
+	}
+ 
+Q. Call vs apply vs bind
+
+	- call takes an object which is going to become the context for this particular function.
+
+	- apply takes an object which is going to become the context for this particular function but it takes input as an array.
+
+	- bind does not take parameter input, it only takes context as an argument and returns acompletly new function	
+
+	var person = {
+
+		name : "Mahendra Singh",
+
+		  show : function(value1) {
+
+			console.log(this.name + ", value = " + value1)
+
+		  },
+
+		}
+
+	//normal call 
+
+	person.show("AA")
+ 
+	//call using - we can pass new context to function
+
+	var altername = {
+
+	name :"Divya Singh"
+
+	}
+
+	person.show.call(altername, "testing")
+
+	//appy
+
+	person.show.apply(altername, ["testing by apply"])
+
+	//bind
+
+	person.show.bind(altername)("Hello bind testing")
+
+	const retfunc = person.show.bind(altername)	
+
+	retfunc("Hello bind testing by new function")
+ 
+Q. Currying
+
+	-
+ 
+Q. Composition polyfill
+
+	- Composition in javascript is a functional programming concept where multiple functions are combined to form a new function.
+
+	  It allows you to apply functions in sequence, where the output of one function becomes the input of next function.
+
+	- Two types of compose function	
+
+		- compose - right to left
+
+		- pipe - evaluate let to right
+
+		Compose example :-
+
+		function Add(a) {return a + 5}
+
+		function Sub(a) {return a - 5}
+
+		function Mul(a) { return a * 5}
+
+		const compose = (...functions) => {
+
+		  return (args) => {
+
+		   return functions.reduceRight((arg, fn) => fn(arg), args)
+
+		  }
+
+		}
+
+		const evaluate = compose(Add, Sub, Mul)
+
+		console.log(evaluate(5))
+
+		pipe example
+
+		function Add(a) {  return a + 6}
+
+		function Sub(a) {  return a - 2}
+
+		function Mul(a) {  return a * 5}
+
+		const pipe = (...functions) => {
+
+		  return (args) => {
+
+		   return functions.reduce((arg, fn) => fn(arg), args)
+
+		  }
+
+		}
+ 
+		const evaluate = pipe(Add, Sub, Mul)
+
+		console.log(evaluate(2))
+
+Q. Promise
+
+	- A promise in javascript is an object that represents the eventual completioin (or failure) of an asynchronous operation.
+
+	- Handling API calls (fetch or axios)
+
+	- Reading files asynchronously
+
+	- Timers and delayed operations
+
+	- Chaining dependent operations
+
+		function showText(message, time) {
+
+		  return new Promise((resolve, reject) => {
+
+			setTimeout(() => {
+
+			  resolve(message)
+
+			}, time)
+
+		  })
+
+		}
+ 
+		function myPromise(promises) {
+
+		  let result = []
+
+		  return new Promise((resolve, reject) => {
+
+			promises.forEach((p, index) => {
+
+			  p.then((res) => {
+
+				result.push(res)
+
+				if (index == promises.length - 1) {
+
+				  resolve(result)
+
+				}
+
+			  }).catch((fail)=> reject(fail))
+
+			});
+
+		  });
+
+		}
+
+		Promise.all([
+
+		  showText("Hello Mahendra", 10),
+
+		  Promise.resolve("Resolve by me")
+
+		]).then((value)=> console.log(value))
+
+		//by composition
+
+		myPromise([
+
+		  showText("Hello Mahendra", 10),
+
+		  Promise.resolve("Resolve by me")
+
+		]).then((value)=> console.log(value))
+
+- 
+
+Q. Lodash 
+
+	- its a library that provide debouncing.
+
+Q. Performance optimization
+
+	-Handling large datasets in React 
+
+		- pagination						-	Loads data in chunks instead of all at once.
+
+		- lazy loading	(Infinite Scroll)	- 	Loads more data only when needed.
+
+		- virtualized rendering(react-window) - 	Renders only visible items to improve performance.
+
+		- memoization (useMemo, useCallback) - Prevents unnecessary calculations and re-renders.
+
+		- debounce							- Prevents excessive API requests.
+
+	- Web Workers - Offloads heavy computations to background threads.
+
+	- React.memo - Avoids re-renders when props don’t change.
+ 
+Q. Hooks 
+
+	- useState
+
+	- useEffect
+
+	- useMemo
+
+	- useCallback
+
+	- useContext 
+
+	- useReducer
+
+	- useRef 
+
+	- useImperativehandle
+
+	- useLayoutEffect
+
+	- useDebugValue
+
+Q. ReactJS Optimization Techniques
+
+	- Dynamic Imports, LAZY & Suspense
+
+		- Only imports the component dynamically
+
+		- Helps to reduce the bundle size 
+
+		- Working using React Lazy & Suspense 
+
+	- Browser level lazyloading Images
+
+	- USEMEMO
+
+		- It works similar to caching mechanism
+
+		- It caches your result or return value of func 
+
+		- Useful when computing a complex function 
+
+	- USECALLBACK
+
+		- It is similar to usemode
+
+		- It caches your whole function
+
+	- React Profiling to improve Rendering
+
+		- Use the react dev tools extension 
+
+		- Manually check by recording & profiling
+
+	- Optimize Large Lists with React Virtualization
+
+		-If rendering thousands of items, use react-window or react-virtualized to render only visible items.
+
+	- Avoid Unnecessary Re-renders with shouldComponentUpdate / React.PureComponent
+
+	- Optimize API Calls with Debouncing & Throttling
+
+	- Optimize State Management
+
+	- Use Code Splitting to Reduce Bundle Size
+ 
+Q. Virtual DOM
+
+	✅ Faster Rendering → Minimizes expensive real DOM updates.
+
+	✅ Improved Performance → React batches updates for efficiency.
+
+	✅ Better User Experience → Smoother UI interactions without flickering.
+
+	✅ Predictable Updates → React efficiently re-renders only what’s necessary.
+ 
+
+
+Q. Controlled Component
+
+	- A controlled component in React is a form element (input, textarea, select) whose value is controlled by React state.
+ 
+Q. Throtling & Debouncing
+
+	- Debouncing - Calling function in a certain key press interval (when we type in textbox and make a pause, this pause will gets calculated)
+
+	- Throtling - Calling function in a certain interval. (Resizing window)
+
+Q. Hoisting
+
+	- Hoisting is a JavaScript mechanism where variables and function declarations are moved (or "hoisted") to the top of their scope before code execution. 
+
+	- This means you can use variables and functions before they are declared in the code.
+
+	- let and const Hoisting
+
+		- Variables declared with let and const are also hoisted, but they are not initialized. 
+
+		- Accessing them before their declaration results in a ReferenceError due to the "Temporal Dead Zone" (TDZ).
+
+Q. Event loop
+
+	- The event loop is a fundamental concept in JavaScript that enables asynchronous operations. 
+
+	- Since JavaScript is single-threaded, it uses the event loop to handle multiple tasks efficiently, 
+
+		such as I/O operations, timers, and user interactions.
+
+	- Execution Flow 
+
+		- Call Stack (Execution Stack) – Executes synchronous code line by line.
+
+		- Web APIs – Handles asynchronous tasks (setTimeout, fetch, DOM events, etc.).
+
+		- Callback Queue (Task Queue/Microtask Queue) – Stores deferred tasks for execution.
+
+		- Event Loop – Continuously checks if the call stack is empty and moves tasks from the callback queue.
+
+Q. Difference between SetTimeput and Set Interval 
+
+	- setTimeout
+
+		- Executes a function once after a delay	
+
+		- Runs the callback only once	
+
+		- Time (in milliseconds) before execution	
+
+		- Not needed (executes once and stops)	
+
+	- seInterval
+
+		- Repeats a function at fixed intervals
+
+		- Runs the callback repeatedly until stopped
+
+		- Time (in milliseconds) between each execution
+
+		- Needs clearInterval() to stop execution
+ 
+Q. Temporal Dead Zone
+
+	- The Temporal Dead Zone (TDZ) is the period between when a variable is hoisted and when it is initialized. 
+
+	  During this time, accessing the variable results in a ReferenceError.
+
+Q. Rest Operator (...)
+
+	- The rest operator (...) allows you to gather multiple arguments or array elements into a single variable. 
+
+	- It is used in function parameters, array destructuring, and object destructuring.
+
+Q. Shallow Copy vs. Deep Copy
+
+	- Shallow Copy
+
+		- A shallow copy creates a new object but only copies references for nested objects. 
+
+		- This means if the original object’s nested properties change, the copy will also change.
+
+		- Use the spread operator { ...obj } or Object.assign({}, obj).
+
+		- For arrays: Use array.slice(), [...array], or Array.from(array).
+
+	- Deep Copy
+
+		- A deep copy creates a completely independent copy of the original object, including all nested objects. 
+
+		- Changes in the copied object do not affect the original.
+
+		- Using JSON.stringify() 
+
+		- Using structuredClone()
+
+		- cloneDeep()
+
+Q. Pure component
+
+	- React.PureComponent is a class-based component that automatically implements shouldComponentUpdate() with a shallow comparison for props and state. \
+
+	- This means it prevents unnecessary re-renders if the state or props do not change.
+
+		-Optimizes performance by preventing unnecessary re-renders.
+
+		-Performs a shallow comparison on props and state before re-rendering.
+
+		-Useful when component re-rendering is expensive (e.g., complex UI components).
+
+Q. Higher order Component
+
+	- A Higher-Order Component (HOC) is a function that takes a component as input and returns a new enhanced component. It allows for code reusability, abstraction, and logic sharing across multiple components.
+
+Q. React Hooks	
+
+	- useState – Manage State in Functional Components
+
+	- useEffect – Handle Side Effects (e.g., Fetching Data), Side effects are actions which are performed with the "outside world".
+
+				 - We perform a side effect when we need to reach outside of our React components to do something.
+
+				 - like - fetching data from API, directly updating DOM Document & Window, Timer function setTimeout,setInterval
+
+				 - Three variations 
+
+					 - without dependency : run each and every update and first load of component
+
+					 - with empty array : run only once while first time of load component
+
+					 - with dependency : runs when first load and when dependency changes
+
+				  - Clean up function
+
+	- useContext – Avoid Prop Drilling 
+
+				 - useContxt hooks is used to manage global data in react.
+
+				 - Steps
+
+					- Creating the context 
+
+					- Providing the context
+
+					- Consuming the context
+
+	- useMemo – Optimize Performance
+
+				- To avoid expensive calculation on every render when the returned value is not changed.
+
+	- useCallback – Optimize Functions to Prevent Re-Renders.
+
+				  - used to return memoised function.
+
+	- useRef - allow us to access DOM element
+
+			 - for creating mutable variables which will not re-render the component.
+
+	- useReducer - used to manage complex state in react application.
+
+	- useLayoutEffect - it works exactly the same as useEffect but difference is "When it runs"
+
+					  - useEffect run after the DOM printed on the browser.
+
+					  - useLayoutEffect run before the DOM is printed on the browser.
+
+					  - most common use case of useLayoutEffect is to get the dimension of the layout.
+
+Q. Server side rendering 
+
+	- SEO
+
+	- Data heavy application
+
+Q. Client side rendering 
+
+	- Its used for personalized apps
+
+Q. React fiber
+
+Q. Diffing
+ 
+Q. Synthatic Events
+
+	- React use event delegation to make function compatible with all browsers and what you are clicking 
+
+		so your click event goes to the to react not to browser.this is called synthetic events.
+
+Q. Micro Task, Event loop
+
+Q. Async and differ and delay load
+
+Q. Critical rendering path
+
+Q. Closure
+
+Q. compose, currying 
+
+Q. Pure function	
+
+Q. Virtual DOM, reconciliation
+ 
+
+
+
+      </code></pre>
+    </div>
+
+    <div id="day5" class="tab-content" style="display: none" role="tabpanel">
+      <h3>.NET, .NET Framework, .NET Core, .NET Standard – Differences</h3>
+      <pre><code>
+.NET Framework: Windows-only, full-featured.
+.NET Core: Cross-platform, high performance.
+.NET: Unified platform (from .NET 5+).
+.NET Standard: Code sharing across .NET versions.
+  </code></pre>
+
+      <h3>Azure - Blob Storage Trigger</h3>
+      <pre><code>
+Tech: Azure Functions + Blob Trigger.
+Example: Auto-process files uploaded to a blob container.
+  </code></pre>
+
+      <h3>Why use Azure Function instead of API?</h3>
+      <pre><code>
+Event-driven, serverless, cost-effective.
+Use for background jobs, timers, or blob/queue processing.
+  </code></pre>
+
+      <h3>Caching Mechanism Used – Redis</h3>
+      <pre><code>
+Used: Redis Cache.
+Pros: Fast, distributed, pub/sub.
+Cons: Volatile, requires setup, cost.
+  </code></pre>
+
+      <h3>Where is Redis Cache Installed?</h3>
+      <pre><code>
+Redis is installed on the server, not on client or browser.
+  </code></pre>
+
+      <h3>React Hooks Code – Show Product List</h3>
+      <pre><code>
+import React, { useEffect, useState } from 'react';
+
+function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => setProducts(data));
+  }, []);
+
+  return (
+    &lt;ul&gt;
+      {products.map(p => (
+        &lt;li key={p.id}&gt;{p.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+export default ProductList;
+  </code></pre>
+
+      <h3>Production Issue – User Can't Save Data</h3>
+      <pre><code>
+1. Check network/API logs.
+2. Review backend logs.
+3. Validate frontend validations.
+4. Hotfix and rollback plan.
+  </code></pre>
+
+      <h3>Authentication & JWT Storage</h3>
+      <pre><code>
+Store JWT in HTTP-only cookie (preferred) or local/sessionStorage.
+Send in Authorization header.
+  </code></pre>
+
+      <h3>What is Middleware in .NET?</h3>
+      <pre><code>
+Middleware = Request/Response handler pipeline.
+Example:
+app.UseMiddleware&lt;CustomLoggingMiddleware&gt;();
+  </code></pre>
+
+      <h3>DI for 2 Classes & 1 Interface</h3>
+      <pre><code>
+public interface IService { void DoWork(); }
+public class ServiceA : IService { public void DoWork() { } }
+public class ServiceB : IService { public void DoWork() { } }
+
+services.AddTransient&lt;IService, ServiceA&gt;();
+services.AddTransient&lt;ServiceB&gt;();
+  </code></pre>
+
+      <h3>DI Lifetimes – When to Use</h3>
+      <pre><code>
+Transient: Per call - Use for lightweight stateless.
+Scoped: Per request - Use for DB context.
+Singleton: App lifetime - Use for shared config/cache.
+  </code></pre>
+
+      <h3>Add Controller via VS Code</h3>
+      <pre><code>
+dotnet add package Microsoft.AspNetCore.Mvc
+dotnet new controller -name ProductController
+  </code></pre>
+
+      <h3>Start-to-End: DB Table → UI</h3>
+      <pre><code>
+1. Create table in DB.
+2. Update EF model.
+3. Add repository/service.
+4. Create API endpoint.
+5. Call API in UI (React/Angular).
+  </code></pre>
+
+      <h3>ORM Relationships – EF Core</h3>
+      <pre><code>
+public class Order {
+  public int Id;
+  public List&lt;OrderItem&gt; Items;
+}
+public class OrderItem {
+  public int Id;
+  public int OrderId;
+  public Order Order;
+}
+  </code></pre>
+
+      <h3>SQL Optimization</h3>
+      <pre><code>
+- Use Indexes.
+- Avoid SELECT *.
+- Use Stored Procedures.
+- Monitor via Execution Plan.
+  </code></pre>
+
+      <h3>SQL Indexing</h3>
+      <pre><code>
+Clustered: Sorts table data.
+Non-Clustered: Index lookup, faster queries.
+Avoid too many indexes.
+  </code></pre>
+
+      <h3>SQL Joins</h3>
+      <pre><code>
+-- Self Join Example
+SELECT e.Name, m.Name AS Manager
+FROM Employees e
+JOIN Employees m ON e.ManagerId = m.Id;
+  </code></pre>
+
+      <h3>Challenges Faced</h3>
+      <pre><code>
+- Handling outages.
+- Optimizing slow queries.
+- Managing frontend states.
+- CI/CD build failures.
+  </code></pre>
+
+      <h3>Day-to-Day Activities</h3>
+      <pre><code>
+- Daily standups.
+- Work on tickets.
+- Code review.
+- Push to Git.
+- Test, Deploy.
+  </code></pre>
+    </div>
 
     <button
       onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
@@ -540,5 +3676,12 @@ HAVING COUNT(*) > 100;
     >
       ⬆️ Top
     </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
